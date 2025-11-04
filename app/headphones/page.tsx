@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import HeroCard from "../Components/HeroCard";
+import Link from "next/link";
 
 const page = () => {
   return (
@@ -26,9 +27,9 @@ const page = () => {
             It redefines your premium headphone experience by reproducing the
             balanced depth and precision of studio-quality sound.
           </p>
-          <button className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-8 py-4 w-fit">
+          <Link href="/headphones/1" className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-8 py-4 w-fit">
             SEE PRODUCT
-          </button>
+          </Link>
         </div>
       </div>
       <div className="padding-container py-20 mt-10 flex items-center w-full justify-between">

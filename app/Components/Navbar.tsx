@@ -18,7 +18,7 @@ const Navbar = () => {
               <Link className="hover:text-orange-100" href="/speakers">SPEAKERS</Link>
             </li>
             <li>
-              <Link className="hover:text-orange-100" href="/">EARPHONES</Link>
+              <Link className="hover:text-orange-100" href="/earphones">EARPHONES</Link>
             </li>
           </ul>
 

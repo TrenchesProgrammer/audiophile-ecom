@@ -10,53 +10,29 @@ const page = () => {
       </div>
       <div className="padding-container py-20 mt-10 flex items-center w-full justify-between">
         <Image
-          src="/zx9.svg"
+          src="/yx1.svg"
           width={100}
           height={100}
           className="w-[50%]"
-          alt="zx9"
+          alt="yx1 wireless"
         />
         <div className="h-full flex flex-col gap-5 justify-center items-center lg:items-start max-w-[400px] text-white">
           <p className="text-orange-100 tracking-[10px]">NEW PRODUCT</p>
           <h1 className="text-3xl font-bold text-black">
-            ZX9 <br /> SPEAKER
+            YX1 WIRELESS <br /> EARPHONES
           </h1>
           <p className="text-black/50 text-center lg:text-left w-[400px]">
-            Upgrade your sound system with the all new ZX9 active speaker. It’s
-            a bookshelf speaker system that offers truly wireless connectivity
-            -- creating new possibilities for more pleasing and practical audio
-            setups.
+            Tailor your listening experience with bespoke dynamic drivers from
+            the new YX1 Wireless Earphones. Enjoy incredible high-fidelity sound
+            even in noisy environments with its active noise cancellation
+            feature.
           </p>
           <button className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-8 py-4 w-fit">
             SEE PRODUCT
           </button>
         </div>
       </div>
-      <div className="padding-container py-20 mt-10 flex items-center w-full justify-between">
-        <div className="h-full flex flex-col gap-5 justify-center items-center lg:items-start max-w-[400px] text-white">
-          <p className="text-orange-100 tracking-[10px]">NEW PRODUCT</p>
-          <h1 className="text-3xl font-bold text-black">
-            ZX7
-            <br /> SPEAKER
-          </h1>
-          <p className="text-black/50 text-center lg:text-left w-[400px]">
-            Stream high quality sound wirelessly with minimal loss. The ZX7
-            bookshelf speaker uses high-end audiophile components that
-            represents the top of the line powered speakers for home or studio
-            use.
-          </p>
-          <button className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-8 py-4 w-fit">
-            SEE PRODUCT
-          </button>
-        </div>
-        <Image
-          src="/zx7.svg"
-          width={100}
-          height={100}
-          className="w-[50%]"
-          alt="zx7"
-        />
-      </div>
+
       <div className="padding-container py-20 mt-10 flex w-full justify-between">
         <HeroCard />
         <HeroCard />
