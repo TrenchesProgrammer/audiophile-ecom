@@ -1,15 +1,54 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-dark-50: #0E0E0E;
+  --color-dark-100: #101010;
+  --color-orange-100: #D87D4A;
+  --color-orange-200: #FBAF85;
+  --color-white-200: #F1F1F1;
+  --color-gray-100: #4C4C4C;
+  --text-3xl: 56px;
 }
 
+@utility bg-hero {
+  background-image: url('../public/home/desktop/image-hero.jpg');
+  background-size: cover;
+  background-position: center;
+}
+@utility bg-pattern{
+  background-image: url('../public/home/desktop/pattern-circles.svg');
+  background-size: cover;
+}
+@utility bg-zx7{
+  background-image: url('../public/home/desktop/image-speaker-zx7.jpg');
+  /* background-size: cover; */
+}
+
+@utility bg-yx1{
+  background-image: url('../public/home/desktop/image-earphones-yx1.jpg');
+  /* background-size: cover; */
+
+}
+
+@utility bg-hero-mobile {
+  background-image: url('../public/home/mobile/image-header.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+@utility bg-hero-tablet {
+  background-image: url('../public/home/tablet/image-header.jpg');
+  background-size: cover;
+  background-position: center;
+}
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+@utility padding-container {
+  @apply px-6 lg:px-30;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,9 +57,10 @@
     --foreground: #ededed;
   }
 }
-
+*{
+  max-width: 1440px;
+}
 body {
-  background: var(--background);
-  color: var(--foreground);
+
   font-family: Arial, Helvetica, sans-serif;
 }
