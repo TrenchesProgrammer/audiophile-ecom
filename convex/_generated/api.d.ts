@@ -8,7 +8,9 @@
  * @module
  */
 
-import type * as tasks from "../tasks.js";
+import type * as cart from "../cart.js";
+import type * as getProducts from "../getProducts.js";
+import type * as products from "../products.js";
 
 import type {
   ApiFromModules,
@@ -25,7 +27,9 @@ import type {
  * ```
  */
 declare const fullApi: ApiFromModules<{
-  tasks: typeof tasks;
+  cart: typeof cart;
+  getProducts: typeof getProducts;
+  products: typeof products;
 }>;
 declare const fullApiWithMounts: typeof fullApi;
 

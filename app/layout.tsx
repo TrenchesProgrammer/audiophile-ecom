@@ -4,6 +4,7 @@ import "./globals.css";
 import { ConvexClientProvider } from "./ConvexClientProvider";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
+import Cart from "./Components/Cart";
 
 
 const manrope = Manrope({
@@ -28,6 +29,7 @@ export default function RootLayout({
       >
         <ConvexClientProvider>
           <Navbar />
+          <Cart />
           {children}
           <Footer/>
         </ConvexClientProvider>

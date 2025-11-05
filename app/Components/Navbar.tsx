@@ -1,8 +1,11 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { useCartStore } from "../store/cartStore";
 
 const Navbar = () => {
+  const { toggleCart } = useCartStore();
   return (
     <nav className=" padding-container top-0 absolute w-full">
       <div className="border-b border-b-white/20  py-7 flex items-center justify-between">
@@ -22,7 +25,7 @@ const Navbar = () => {
             </li>
           </ul>
 
-        <Image src="/carts.svg" width={24} height={24} alt="Cart" />
+        <Image src="/carts.svg" width={24} height={24} alt="Cart" onClick={toggleCart} className="cursor-pointer" />
       </div>
     </nav>
   );

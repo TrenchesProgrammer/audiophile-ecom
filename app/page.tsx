@@ -1,17 +1,22 @@
-"use client";
+'use client'
 
 import Image from "next/image";
-import { useQuery } from "convex/react";
+import { useQuery, useMutation } from "convex/react";
 import { api } from "../convex/_generated/api";
 import HeroCard from "./Components/HeroCard";
-
-interface Task {
-  _id: string;
-  text: string;
-}
+import { Id } from "../convex/_generated/dataModel";
 
 export default function Home() {
-  const tasks = useQuery((api as any).tasks.get) as Task[] | undefined;
+  const products = useQuery(api.getProducts.getProducts);
+  const addToCart = useMutation(api.cart.addToCart);
+
+  const handleAddToCart = () => {
+    const product = products?.find(p => p.name === 'XX99 Mark II Headphones');
+    if (product) {
+      addToCart({ productId: product._id, quantity: 1 });
+    }
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between ">
       <section className="bg-hero-mobile md:bg-hero-tablet lg:bg-hero h-[70vh] lg:h-[729px]  flex justify-center lg:justify-start w-full padding-container">
@@ -24,8 +29,8 @@ export default function Home() {
             Experience natural, lifelike audio and exceptional  build quality
             made for the passionate music enthusiast.
           </p>
-          <button className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-8 py-4 w-fit">
-            SEE PRODUCT
+          <button onClick={handleAddToCart} className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-8 py-4 w-fit">
+            ADD TO CART
           </button>
         </div>
       </section>
