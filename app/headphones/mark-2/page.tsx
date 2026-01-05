@@ -2,10 +2,24 @@
 import HeroCard from "@/app/Components/HeroCard";
 import Image from "next/image";
 import Link from "next/link";
-
+import { useMutation, useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+
 const page = () => {
   const router = useRouter();
+  const products = useQuery(api.getProducts.getProducts);
+  const addToCart = useMutation(api.cart.addToCart);
+  const [quantity, setQuantity] = useState(1);
+
+  const handleAddToCart = () => {
+    // Logic updated to find Mark II
+    const product = products?.find((p) => p.name === "XX99 Mark II Headphones");
+    if (product) {
+      addToCart({ productId: product._id, quantity });
+    }
+  };
 
   return (
     <>
@@ -18,12 +32,14 @@ const page = () => {
       >
         Go Back
       </p>
-      <div className="padding-container mt-10 flex items-center w-full justify-between">
+
+      {/* Main Product Section - Added Responsive Flex */}
+      <div className="padding-container mt-10 flex flex-col lg:flex-row gap-10 lg:gap-0 items-center w-full justify-between">
         <Image
           src="/xx99-mark-two.svg"
           width={100}
           height={100}
-          className="w-[50%]"
+          className="w-full lg:w-[50%]" // Added responsive width
           alt="xx99 mark ii"
         />
         <div className="h-full flex flex-col gap-5 justify-center items-center lg:items-start max-w-[400px] text-white">
@@ -38,20 +54,36 @@ const page = () => {
           </p>
           <p className="font-bold text-black">$ 2,999</p>
           <div className="flex gap-5">
+            {/* Interactive Quantity Selector */}
             <div className=" text-black/25 bg-white-200 font-bold w-35 px-4 py-5 flex justify-between ">
-              <p className="cursor-pointer hover:text-orange-100">-</p>
-              <p className="text-black">1</p>
-              <p className="cursor-pointer hover:text-orange-100">+</p>
+              <p
+                className="cursor-pointer hover:text-orange-100"
+                onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
+              >
+                -
+              </p>
+              <p className="text-black">{quantity}</p>
+              <p
+                className="cursor-pointer hover:text-orange-100"
+                onClick={() => setQuantity((prev) => prev + 1)}
+              >
+                +
+              </p>
             </div>
-            <button className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-8 py-4 w-fit">
+            {/* Functional Add to Cart Button */}
+            <button
+              onClick={handleAddToCart}
+              className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-8 py-4 w-fit"
+            >
               ADD TO CART
             </button>
           </div>
         </div>
       </div>
 
-      <div className="padding-container flex gap-30 mt-20">
-        <div className="w-[60%]">
+      {/* Features Section - Added Responsive Flex/Widths */}
+      <div className="padding-container flex flex-col lg:flex-row gap-30 mt-20">
+        <div className="w-full lg:w-[60%]">
           <h2 className="text-[32px] font-bold">FEATURES</h2>
           <p className="text-black/50">
             Featuring a genuine leather head strap and premium earcups, these
@@ -92,28 +124,30 @@ const page = () => {
           </div>
         </div>
       </div>
+
+      {/* Gallery Section - Added Responsive Flex */}
       <div className="padding-container mt-30">
-        <div className="flex gap-10">
-          <div className="flex flex-col justify-between">
+        <div className="flex flex-col lg:flex-row gap-10">
+          <div className="flex flex-1 flex-col justify-between gap-10 lg:gap-0">
             <Image
               src="/xx99-model.svg"
-              className="w-full "
+              className="w-full rounded-xl"
               width={100}
               height={100}
               alt="xx99-model"
             />
             <Image
               src="/xx99-sample.svg"
-              className="w-full"
+              className="w-full rounded-xl"
               width={100}
               height={100}
               alt="xx99-dark"
             />
           </div>
-          <div className="w-[60%]">
+          <div className="w-full lg:w-[60%]">
             <Image
               src="/xx99-dark.svg"
-              className="w-full"
+              className="w-full h-full object-cover rounded-xl"
               width={100}
               height={100}
               alt="xx99-dark"
@@ -121,10 +155,14 @@ const page = () => {
           </div>
         </div>
       </div>
+
+      {/* You May Also Like - Added Responsive Flex */}
       <div className="padding-container pt-20">
-        <h2 className="font-bold text-center text-[32px] mb-10">YOU MAY ALSO LIKE</h2>
-        <div className="w-full flex gap-5">
-          <div className="w-[33%] flex flex-col gap-4 items-center">
+        <h2 className="font-bold text-center text-[32px] mb-10">
+          YOU MAY ALSO LIKE
+        </h2>
+        <div className="w-full flex flex-col lg:flex-row gap-5">
+          <div className="w-full lg:w-[33%] flex flex-col gap-4 items-center">
             <Image
               alt=""
               src="/xx99-mark-1.svg"
@@ -137,7 +175,7 @@ const page = () => {
               SEE PRODUCT
             </button>
           </div>
-          <div className="w-[33%] flex flex-col gap-4 items-center">
+          <div className="w-full lg:w-[33%] flex flex-col gap-4 items-center">
             <Image
               alt=""
               src="/xx59-1.svg"
@@ -150,7 +188,7 @@ const page = () => {
               SEE PRODUCT
             </button>
           </div>
-          <div className="w-[33%] flex flex-col gap-4 items-center">
+          <div className="w-full lg:w-[33%] flex flex-col gap-4 items-center">
             <Image
               alt=""
               src="/zx9-1.svg"
@@ -165,13 +203,16 @@ const page = () => {
           </div>
         </div>
       </div>
-      <div className="padding-container py-20 mt-10 flex w-full justify-between">
+
+      <div className="padding-container py-20 mt-10 gap-25 lg:gap-0 flex flex-col lg:flex-row w-full lg:justify-between">
         <HeroCard />
         <HeroCard />
         <HeroCard />
       </div>
-      <section className="flex padding-container gap-20 items-center mt-30">
-        <div className="flex flex-col gap-10">
+
+      {/* Best Gear Section - Added Responsive Reverse Flex */}
+      <section className="flex flex-col-reverse lg:flex-row padding-container gap-20 items-center mt-30">
+        <div className="flex flex-col text-center lg:text-left gap-10">
           <h3 className="text-[40px]  font-bold">
             BRINGING YOU THE <br />
             <span className="text-orange-100">BEST</span> AUDIO GEAR
@@ -188,7 +229,7 @@ const page = () => {
         <Image
           src="/shared/desktop/image-best-gear.jpg"
           alt="Best gear"
-          className="rounded-lg"
+          className="rounded-lg w-full lg:w-500"
           height={500}
           width={500}
         ></Image>

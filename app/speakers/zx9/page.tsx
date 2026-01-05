@@ -2,10 +2,24 @@
 import HeroCard from "@/app/Components/HeroCard";
 import Image from "next/image";
 import Link from "next/link";
-
+import { useMutation, useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+
 const page = () => {
   const router = useRouter();
+  const products = useQuery(api.getProducts.getProducts);
+  const addToCart = useMutation(api.cart.addToCart);
+  const [quantity, setQuantity] = useState(1);
+
+  const handleAddToCart = () => {
+    // Logic updated to find ZX9 Speaker
+    const product = products?.find((p) => p.name === "ZX9 Speaker");
+    if (product) {
+      addToCart({ productId: product._id, quantity });
+    }
+  };
 
   return (
     <>
@@ -18,18 +32,20 @@ const page = () => {
       >
         Go Back
       </p>
-      <div className="padding-container mt-10 flex items-center w-full justify-between">
+
+      {/* Main Product Section - Responsive Flex */}
+      <div className="padding-container mt-10 flex flex-col lg:flex-row gap-10 lg:gap-0 items-center w-full justify-between">
         <Image
           src="/zx9.svg"
           width={100}
           height={100}
-          className="w-[50%]"
-          alt="xx99 mark ii"
+          className="w-full lg:w-[50%]"
+          alt="zx9 speaker"
         />
         <div className="h-full flex flex-col gap-5 justify-center items-center lg:items-start max-w-[400px] text-white">
           <p className="text-orange-100 tracking-[10px]">NEW PRODUCT</p>
           <h1 className="text-3xl font-bold text-black">
-            ZX9 <br /> HEADPHONES
+            ZX9 <br /> SPEAKER
           </h1>
           <p className="text-black/50 text-center lg:text-left w-[400px]">
             Upgrade your sound system with the all new ZX9 active speaker. It’s
@@ -39,33 +55,50 @@ const page = () => {
           </p>
           <p className="font-bold text-black">$ 4,500</p>
           <div className="flex gap-5">
+            {/* Interactive Quantity Selector */}
             <div className=" text-black/25 bg-white-200 font-bold w-35 px-4 py-5 flex justify-between ">
-              <p className="cursor-pointer hover:text-orange-100">-</p>
-              <p className="text-black">1</p>
-              <p className="cursor-pointer hover:text-orange-100">+</p>
+              <p
+                className="cursor-pointer hover:text-orange-100"
+                onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
+              >
+                -
+              </p>
+              <p className="text-black">{quantity}</p>
+              <p
+                className="cursor-pointer hover:text-orange-100"
+                onClick={() => setQuantity((prev) => prev + 1)}
+              >
+                +
+              </p>
             </div>
-            <button className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-8 py-4 w-fit">
+            {/* Functional Add to Cart Button */}
+            <button
+              onClick={handleAddToCart}
+              className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-8 py-4 w-fit"
+            >
               ADD TO CART
             </button>
           </div>
         </div>
       </div>
 
-      <div className="padding-container flex gap-30 mt-20">
-        <div className="w-[60%]">
+      {/* Features Section - Responsive Flex */}
+      <div className="padding-container flex flex-col lg:flex-row gap-30 mt-20">
+        <div className="w-full lg:w-[60%]">
           <h2 className="text-[32px] font-bold">FEATURES</h2>
           <p className="text-black/50">
             Connect via Bluetooth or nearly any wired source. This speaker
             features optical, digital coaxial, USB Type-B, stereo RCA, and
             stereo XLR inputs, allowing you to have up to five wired source
             devices connected for easy switching. Improved bluetooth technology
-            offers near lossless audio quality at up to 328ft (100m). <br /><br /> Discover
-            clear, more natural sounding highs than the competition with ZX9’s
-            signature planar diaphragm tweeter. Equally important is its
-            powerful room-shaking bass courtesy of a 6.5” aluminum alloy bass
-            unit. You’ll be able to enjoy equal sound quality whether in a large
-            room or small den. Furthermore, you will experience new sensations
-            from old songs since it can respond to even the subtle waveforms.
+            offers near lossless audio quality at up to 328ft (100m). <br />
+            <br /> Discover clear, more natural sounding highs than the
+            competition with ZX9’s signature planar diaphragm tweeter. Equally
+            important is its powerful room-shaking bass courtesy of a 6.5”
+            aluminum alloy bass unit. You’ll be able to enjoy equal sound
+            quality whether in a large room or small den. Furthermore, you will
+            experience new sensations from old songs since it can respond to
+            even the subtle waveforms.
           </p>
         </div>
         <div>
@@ -86,46 +119,51 @@ const page = () => {
               <p>3.5mm 5m Audio Cable</p>
             </div>
             <div className="flex gap-4 text-black/50">
-              <span className="text-orange-100">1x</span> <p>10m Optical Cable</p>
+              <span className="text-orange-100">1x</span>{" "}
+              <p>10m Optical Cable</p>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Gallery Section - Responsive Flex */}
       <div className="padding-container mt-30">
-        <div className="flex gap-10">
-          <div className="flex flex-col justify-between">
+        <div className="flex flex-col lg:flex-row gap-10">
+          <div className="flex flex-1 flex-col justify-between gap-10 lg:gap-0">
             <Image
               src="/zx9-sample-2.svg"
-              className="w-full "
+              className="w-full rounded-xl"
               width={100}
               height={100}
-              alt="xx99-model"
+              alt="zx9-sample-2"
             />
             <Image
               src="/zx9-sample-3.svg"
-              className="w-full"
+              className="w-full rounded-xl"
               width={100}
               height={100}
-              alt="xx99-dark"
+              alt="zx9-sample-3"
             />
           </div>
-          <div className="w-[60%]">
+          <div className="w-full lg:w-[60%]">
             <Image
               src="/zx9-sample.svg"
-              className="w-full"
+              className="w-full h-full object-cover rounded-xl"
               width={100}
               height={100}
-              alt="xx99-dark"
+              alt="zx9-main-sample"
             />
           </div>
         </div>
       </div>
+
+      {/* You May Also Like - Responsive Flex */}
       <div className="padding-container pt-20">
         <h2 className="font-bold text-center text-[32px] mb-10">
           YOU MAY ALSO LIKE
         </h2>
-        <div className="w-full flex gap-5">
-          <div className="w-[33%] flex flex-col gap-4 items-center">
+        <div className="w-full flex flex-col lg:flex-row gap-5">
+          <div className="w-full lg:w-[33%] flex flex-col gap-4 items-center">
             <Image
               alt=""
               src="/xx99-mark-1.svg"
@@ -138,7 +176,7 @@ const page = () => {
               SEE PRODUCT
             </button>
           </div>
-          <div className="w-[33%] flex flex-col gap-4 items-center">
+          <div className="w-full lg:w-[33%] flex flex-col gap-4 items-center">
             <Image
               alt=""
               src="/xx59-1.svg"
@@ -151,7 +189,7 @@ const page = () => {
               SEE PRODUCT
             </button>
           </div>
-          <div className="w-[33%] flex flex-col gap-4 items-center">
+          <div className="w-full lg:w-[33%] flex flex-col gap-4 items-center">
             <Image
               alt=""
               src="/zx9-1.svg"
@@ -166,13 +204,16 @@ const page = () => {
           </div>
         </div>
       </div>
-      <div className="padding-container py-20 mt-10 flex w-full justify-between">
+
+      <div className="padding-container py-20 mt-10 gap-25 lg:gap-0 flex flex-col lg:flex-row w-full lg:justify-between">
         <HeroCard />
         <HeroCard />
         <HeroCard />
       </div>
-      <section className="flex padding-container gap-20 items-center mt-30">
-        <div className="flex flex-col gap-10">
+
+      {/* Best Gear - Responsive Flex */}
+      <section className="flex flex-col-reverse lg:flex-row padding-container gap-20 items-center mt-30">
+        <div className="flex flex-col text-center lg:text-left gap-10">
           <h3 className="text-[40px]  font-bold">
             BRINGING YOU THE <br />
             <span className="text-orange-100">BEST</span> AUDIO GEAR
@@ -189,7 +230,7 @@ const page = () => {
         <Image
           src="/shared/desktop/image-best-gear.jpg"
           alt="Best gear"
-          className="rounded-lg"
+          className="rounded-lg w-full lg:w-500"
           height={500}
           width={500}
         ></Image>
