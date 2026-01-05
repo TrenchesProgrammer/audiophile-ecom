@@ -18,6 +18,7 @@ const page = () => {
     // Note: Assuming DB name is "ZX7 Speaker" based on description context
     const product = products?.find((p) => p.name === "ZX7 Speaker");
     if (product) {
+      console.log('Adding to cart:', { productId: product._id, quantity });
       addToCart({ productId: product._id, quantity });
     }
   };

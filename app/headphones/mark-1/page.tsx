@@ -16,6 +16,7 @@ const page = () => {
   const handleAddToCart = () => {
     const product = products?.find(p => p.name === 'XX99 Mark I Headphones');
     if (product) {
+      console.log('Adding to cart:', { productId: product._id, quantity });
       addToCart({ productId: product._id, quantity });
     }
   };

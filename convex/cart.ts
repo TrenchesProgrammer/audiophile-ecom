@@ -2,15 +2,16 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
 
-export const getCartItems = query({ 
+export const getCartItems = query({
     handler: async (ctx) => {
         const cartItems = await ctx.db.query("cart").collect();
-        let items = [];
-        for(const item of cartItems){
-            const product = await ctx.db.get(item.productId);
-            items.push({ ...item, product });
-        }
-        return items;
+        const productIds = cartItems.map(item => item.productId);
+        const products = await Promise.all(productIds.map(id => ctx.db.get(id)));
+
+        return cartItems.map((item, index) => ({
+            ...item,
+            product: products[index]
+        })).filter(item => item.product !== null);
     }
 });
 
@@ -26,11 +27,13 @@ export const addToCart = mutation({
       await ctx.db.patch(existingCartItem._id, {
         quantity: existingCartItem.quantity + args.quantity,
       });
+      console.log(`Updated quantity for product ${args.productId}. New quantity: ${existingCartItem.quantity + args.quantity}`);
     } else {
       await ctx.db.insert("cart", {
         productId: args.productId,
         quantity: args.quantity,
       });
+      console.log(`Added new product ${args.productId} to cart with quantity ${args.quantity}`);
     }
   },
 });

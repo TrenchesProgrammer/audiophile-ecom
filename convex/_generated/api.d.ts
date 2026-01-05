@@ -10,7 +10,9 @@
 
 import type * as cart from "../cart.js";
 import type * as getProducts from "../getProducts.js";
+import type * as loadProducts from "../loadProducts.js";
 import type * as products from "../products.js";
+import type * as seed from "../seed.js";
 
 import type {
   ApiFromModules,
@@ -29,7 +31,9 @@ import type {
 declare const fullApi: ApiFromModules<{
   cart: typeof cart;
   getProducts: typeof getProducts;
+  loadProducts: typeof loadProducts;
   products: typeof products;
+  seed: typeof seed;
 }>;
 declare const fullApiWithMounts: typeof fullApi;
 

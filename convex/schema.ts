@@ -1,23 +1,21 @@
-
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
+// Helper for the repeated image structure
+const imageType = v.object({
+  mobile: v.string(),
+  tablet: v.string(),
+  desktop: v.string(),
+});
+
 export default defineSchema({
   products: defineTable({
-    id: v.number(),
+    id: v.number(), 
     slug: v.string(),
     name: v.string(),
-    image: v.object({
-      mobile: v.string(),
-      tablet: v.string(),
-      desktop: v.string(),
-    }),
+    image: imageType,
     category: v.string(),
-    categoryImage: v.object({
-      mobile: v.string(),
-      tablet: v.string(),
-      desktop: v.string(),
-    }),
+    categoryImage: imageType,
     new: v.boolean(),
     price: v.number(),
     description: v.string(),
@@ -29,36 +27,22 @@ export default defineSchema({
       })
     ),
     gallery: v.object({
-      first: v.object({
-        mobile: v.string(),
-        tablet: v.string(),
-        desktop: v.string(),
-      }),
-      second: v.object({
-        mobile: v.string(),
-        tablet: v.string(),
-        desktop: v.string(),
-      }),
-      third: v.object({
-        mobile: v.string(),
-        tablet: v.string(),
-        desktop: v.string(),
-      }),
+      first: imageType,
+      second: imageType,
+      third: imageType,
     }),
     others: v.array(
       v.object({
         slug: v.string(),
         name: v.string(),
-        image: v.object({
-          mobile: v.string(),
-          tablet: v.string(),
-          desktop: v.string(),
-        }),
+        image: imageType,
       })
     ),
   }),
+
+  // --- ADD THIS SECTION BELOW ---
   cart: defineTable({
-    productId: v.id("products"),
+    productId: v.id("products"), // References the products table
     quantity: v.number(),
   }),
 });

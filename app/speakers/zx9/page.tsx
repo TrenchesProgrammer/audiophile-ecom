@@ -17,6 +17,7 @@ const page = () => {
     // Logic updated to find ZX9 Speaker
     const product = products?.find((p) => p.name === "ZX9 Speaker");
     if (product) {
+      console.log('Adding to cart:', { productId: product._id, quantity });
       addToCart({ productId: product._id, quantity });
     }
   };

@@ -17,6 +17,7 @@ const page = () => {
     // Logic updated to find Mark II
     const product = products?.find((p) => p.name === "XX99 Mark II Headphones");
     if (product) {
+      console.log('Adding to cart:', { productId: product._id, quantity });
       addToCart({ productId: product._id, quantity });
     }
   };

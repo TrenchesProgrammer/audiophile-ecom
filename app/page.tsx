@@ -13,6 +13,7 @@ export default function Home() {
   const handleAddToCart = () => {
     const product = products?.find(p => p.name === 'XX99 Mark II Headphones');
     if (product) {
+      console.log('Adding to cart:', { productId: product._id, quantity: 1 });
       addToCart({ productId: product._id, quantity: 1 });
     }
   };

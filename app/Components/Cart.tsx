@@ -4,12 +4,14 @@ import CartItem from './CartItem';
 import { useCartStore } from '../store/cartStore';
 import { useQuery, useMutation } from 'convex/react';
 import { api } from '../../convex/_generated/api';
+import { useRouter } from 'next/navigation';
 
 const Cart = () => {
   const { isCartOpen, closeCart } = useCartStore();
   const cartRef = useRef<HTMLDivElement>(null);
   const cartItems = useQuery(api.cart.getCartItems);
   const removeAll = useMutation(api.cart.removeAll);
+  const router = useRouter();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -34,6 +36,11 @@ const Cart = () => {
     return cartItems.reduce((acc, item) => acc + ((item.product?.price ?? 0) * item.quantity), 0);
   }, [cartItems]);
 
+  const handleCheckout = () => {
+    closeCart();
+    router.push('/checkout');
+  }
+
   if (!isCartOpen) return null;
 
   return (
@@ -44,11 +51,15 @@ const Cart = () => {
           <p className="text-black/50 underline" onClick={() => removeAll()}>Remove all</p>
         </div>
 
+        {cartItems?.map((item) => <CartItem key={item._id} item={item} />)}
+
         <div className="flex justify-between">
           <p className="text-black/50">TOTAL</p>
           <p className="text-black font-bold">${total}</p>
         </div>
-        <button className="bg-orange-100 text-white hover:bg-orange-200 w-full text-center py-3">
+        <button 
+          onClick={handleCheckout}
+          className="bg-orange-100 text-white hover:bg-orange-200 w-full text-center py-3">
           CHECKOUT
         </button>
       </div>

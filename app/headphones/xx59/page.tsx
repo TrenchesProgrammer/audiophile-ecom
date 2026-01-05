@@ -17,6 +17,7 @@ const page = () => {
     // Logic updated to find XX59
     const product = products?.find((p) => p.name === "XX59 Headphones");
     if (product) {
+      console.log('Adding to cart:', { productId: product._id, quantity });
       addToCart({ productId: product._id, quantity });
     }
   };

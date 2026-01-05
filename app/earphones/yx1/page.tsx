@@ -17,6 +17,7 @@ const page = () => {
     // Logic updated to find YX1
     const product = products?.find((p) => p.name === "YX1 Wireless Earphones");
     if (product) {
+      console.log('Adding to cart:', { productId: product._id, quantity });
       addToCart({ productId: product._id, quantity });
     }
   };
