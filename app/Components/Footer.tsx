@@ -7,10 +7,10 @@ const Footer = () => {
   return (
     <footer className="bg-dark-100 padding-container mt-20 bottom-0 w-full">
       <div className="h-1 w-20 bg-orange-100" />
-      <div className="py-10">
-        <div className="flex justify-between">
+      <div className="py-10 text-center md:text-left">
+        <div className="flex flex-col md:flex-row justify-between">
           <Image src="/logo.svg" alt="logo" height={96} width={96} />
-          <ul className=" text-white tracking-[2px] text-[13px] gap-7  flex ">
+          <ul className=" text-white tracking-[2px] text-[13px] gap-7  flex flex-col md:flex-row items-center">
             <li>
               <Link className="hover:text-orange-100" href="/">HOME</Link>
             </li>
@@ -25,9 +25,9 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-        <div className="flex items-center mt-10 w-full justify-between">
+        <div className="flex items-center md:items-end mt-10 w-full flex-col md:flex-row  justify-between">
           <div className="text-white/50 flex flex-col gap-10">
-            <p className="w-100">
+            <p className="min-w-100">
               Audiophile is an all in one stop to fulfill your audio needs.
               We're a small team of music lovers and sound specialists who are
               devoted to helping you get the most out of personal audio. Come

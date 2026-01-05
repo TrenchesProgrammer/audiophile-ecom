@@ -1,5 +1,5 @@
 'use client'
-import React, { useRef, useEffect, useMemo } from 'react';
+import { useRef, useEffect, useMemo } from 'react';
 import CartItem from './CartItem';
 import { useCartStore } from '../store/cartStore';
 import { useQuery, useMutation } from 'convex/react';
@@ -31,7 +31,7 @@ const Cart = () => {
 
   const total = useMemo(() => {
     if (!cartItems) return 0;
-    return cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+    return cartItems.reduce((acc, item) => acc + ((item.product?.price ?? 0) * item.quantity), 0);
   }, [cartItems]);
 
   if (!isCartOpen) return null;
@@ -43,9 +43,7 @@ const Cart = () => {
           <p>Cart({cartItems?.length || 0})</p>
           <p className="text-black/50 underline" onClick={() => removeAll()}>Remove all</p>
         </div>
-        {cartItems?.map((item) => (
-          <CartItem key={item._id} item={item} />
-        ))}
+
         <div className="flex justify-between">
           <p className="text-black/50">TOTAL</p>
           <p className="text-black font-bold">${total}</p>

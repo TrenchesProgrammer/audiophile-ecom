@@ -10,7 +10,7 @@ const Navbar = () => {
     <nav className=" padding-container top-0 absolute w-full">
       <div className="border-b border-b-white/20  py-7 flex items-center justify-between">
         <Image src="/logo.svg" alt="logo" height={96} width={96} />
-          <ul className=" text-white tracking-[2px] text-[13px] gap-7  flex ">
+          <ul className=" text-white tracking-[2px] hidden text-[13px] gap-7  lg:flex ">
             <li>
               <Link className="hover:text-orange-100" href="/">HOME</Link>
             </li>

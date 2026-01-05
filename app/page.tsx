@@ -41,16 +41,17 @@ export default function Home() {
       </div>
       <div className="padding-container m-10 w-full">
         <div className="bg-orange-100 rounded-lg relative  text-white w-full">
-          <div className="bg-pattern w-[70%] h-full absolute left-0 "/>
-          <div className="pt-15 flex justify-around  ">
+          <div className="bg-pattern w-full md:w-[70%] h-full absolute left-0 "/>
+          <div className=" py-15 md:pt-15 flex flex-col gap-10 md:flex-row items-center justify-around  ">
             <Image
               src="/home/desktop/image-speaker-zx9.svg"
               alt="speaker zx9"
               height={350}
               width={350}
-              className="z-2"
+              className="z-2 w-50 md:w-auto"
+              
             />
-            <div className="flex flex-col gap-3 h-full justify-center">
+            <div className="flex flex-col gap-10  md:gap-3 h-full items-center text-center md:text-left md:items-start justify-center">
               <h2 className="text-3xl font-bold">
                 ZX9 <br /> SPEAKER
               </h2>
@@ -66,22 +67,22 @@ export default function Home() {
           <h3 className="text-[28px] font-bold">ZX7 SPEAKER</h3>
           <button className="border border-black cursor-pointer hover:bg-black hover:text-white px-5 py-3 mt-3 w-fit">SEE PRODUCT</button>
         </div>
-        <div className="flex mt-10 gap-5">
-          <div className="bg-yx1 rounded-lg w-[50%] h-80 ">
+        <div className="flex flex-col md:flex-row mt-10 gap-5">
+          <div className="bg-yx1 rounded-lg w-full md:w-[50%] h-80 ">
 
           </div>
-          <div className="bg-white-200 w-[50%] h-auto rounded-lg flex flex-col justify-center p-20">
+          <div className="bg-white-200 w-full md:w-[50%] h-auto rounded-lg flex flex-col justify-center p-20">
             <h3 className="text-[28px] font-bold">YX1 EARPHONES</h3>
             <button className="border border-black cursor-pointer hover:bg-black hover:text-white px-5 py-3 mt-3 w-fit">SEE PRODUCT</button>
           </div>
         </div>
       </div>
-      <section className="flex padding-container gap-20 items-center mt-30">
+      <section className="flex flex-col-reverse lg:flex-row padding-container gap-20 items-center mt-30">
         <div className="flex flex-col gap-10">
             <h3 className="text-[40px]  font-bold">BRINGING YOU THE <br /><span className="text-orange-100">BEST</span> AUDIO GEAR </h3>
             <p className="text-[15px] text-black/50">Located at the heart of New York City, Audiophile is the premier store for high end headphones, earphones, speakers, and audio accessories. We have a large showroom and luxury demonstration rooms available for you to browse and experience a wide range of our products. Stop by our store to meet some of the fantastic people who make Audiophile the best place to buy your portable audio equipment.</p>
         </div>
-        <Image src="/shared/desktop/image-best-gear.jpg" alt="Best gear" className="rounded-lg" height={500} width={500}></Image>
+        <Image src="/shared/desktop/image-best-gear.jpg" alt="Best gear" className="rounded-lg w-full" height={500} width={500}></Image>
       </section>
     </main>
   );
