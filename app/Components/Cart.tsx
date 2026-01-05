@@ -51,7 +51,7 @@ const Cart = () => {
           <p className="text-black/50 underline" onClick={() => removeAll()}>Remove all</p>
         </div>
 
-        {cartItems?.map((item) => <CartItem key={item._id} item={item} />)}
+        {cartItems?.filter((item) => item.product !== null).map((item) => (<CartItem key={item._id} item={item as typeof item & { product: NonNullable<typeof item.product> }} />))}
 
         <div className="flex justify-between">
           <p className="text-black/50">TOTAL</p>

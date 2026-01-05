@@ -4,17 +4,22 @@ import { Id } from "../../convex/_generated/dataModel";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 
-type CartItemProps = {
+interface CartItemProps {
   item: {
     _id: Id<"cart">;
     quantity: number;
     product: {
       name: string;
       price: number;
-      image: string;
+      // FIX: Update this from 'string' to the object structure
+      image: {
+        mobile: string;
+        tablet: string;
+        desktop: string;
+      };
     };
   };
-};
+}
 
 const CartItem = ({ item }: CartItemProps) => {
   const updateQuantity = useMutation(api.cart.updateQuantity);
