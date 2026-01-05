@@ -8,20 +8,20 @@ const Footer = () => {
     <footer className="bg-dark-100 padding-container mt-20 bottom-0 w-full">
       <div className="h-1 w-20 bg-orange-100" />
       <div className="py-10 text-center md:text-left">
-        <div className="flex flex-col md:flex-row justify-between">
-          <Image src="/logo.svg" alt="logo" height={96} width={96} />
+        <div className="flex flex-col lg:flex-row justify-between">
+          <Image src="/logo.svg" alt="logo" className="m-auto md:m-0 mb-10 md:mb-5 w-40 lg:w-auto" height={96} width={96} />
           <ul className=" text-white tracking-[2px] text-[13px] gap-7  flex flex-col md:flex-row items-center">
             <li>
               <Link className="hover:text-orange-100" href="/">HOME</Link>
             </li>
             <li>
-              <Link className="hover:text-orange-100" href="/">HEADPHONES</Link>
+              <Link className="hover:text-orange-100" href="/headphones">HEADPHONES</Link>
             </li>
             <li>
-              <Link className="hover:text-orange-100" href="/">SPEAKERS</Link>
+              <Link className="hover:text-orange-100" href="/speakers">SPEAKERS</Link>
             </li>
             <li>
-              <Link className="hover:text-orange-100" href="/">EARPHONES</Link>
+              <Link className="hover:text-orange-100" href="/earphones">EARPHONES</Link>
             </li>
           </ul>
         </div>

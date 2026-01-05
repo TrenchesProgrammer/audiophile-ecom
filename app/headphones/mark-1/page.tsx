@@ -31,20 +31,20 @@ const page = () => {
       >
         Go Back
       </p>
-      <div className="padding-container mt-10 flex items-center w-full justify-between">
+      <div className="padding-container mt-10 flex flex-col lg:flex-row gap-10 lg:gap-0 items-start lg:items-center w-full justify-between">
         <Image
           src="/xx99-mark-1.svg"
           width={100}
           height={100}
-          className="w-[50%]"
+          className="w-full lg:w-[50%]"
           alt="xx99 mark ii"
         />
-        <div className="h-full flex flex-col gap-5 justify-center items-center lg:items-start max-w-[400px] text-white">
+        <div className="h-full flex flex-col gap-5 justify-center items-start max-w-[400px] text-white">
           <p className="text-orange-100 tracking-[10px]">NEW PRODUCT</p>
           <h1 className="text-3xl font-bold text-black">
             XX99 MARK I <br /> HEADPHONES
           </h1>
-          <p className="text-black/50 text-center lg:text-left w-[400px]">
+          <p className="text-black/50 text-left w-[400px]">
             As the gold standard for headphones, the classic XX99 Mark I offers
             detailed and accurate audio reproduction for audiophiles, mixing
             engineers, and music aficionados alike in studios and on the go. .
@@ -63,8 +63,8 @@ const page = () => {
         </div>
       </div>
 
-      <div className="padding-container flex gap-30 mt-20">
-        <div className="w-[60%]">
+      <div className="padding-container flex flex-col gap-30 mt-20">
+        <div className="lg:w-[60%]">
           <h2 className="text-[32px] font-bold">FEATURES</h2>
           <p className="text-black/50">
             As the headphones all others are measured against, the XX99 Mark I
@@ -101,41 +101,44 @@ const page = () => {
           </div>
         </div>
       </div>
-      <div className="padding-container mt-30">
-        <div className="flex gap-10">
-          <div className="flex flex-col justify-between">
-            <Image
-              src="/mark-1-sample-2.svg"
-              className="w-full "
-              width={100}
-              height={100}
-              alt="xx99-model"
-            />
-            <Image
-              src="/mark-1-sample-3.svg"
-              className="w-full"
-              width={100}
-              height={100}
-              alt="xx99-dark"
-            />
-          </div>
-          <div className="w-[60%]">
-            <Image
-              src="/mark-1-sample.svg"
-              className="w-full"
-              width={100}
-              height={100}
-              alt="xx99-dark"
-            />
-          </div>
-        </div>
-      </div>
+     <div className="padding-container mt-30">
+  <div className="flex flex-col lg:flex-row gap-10">
+    
+    <div className="flex flex-1 flex-col gap-10">
+      <Image
+        src="/mark-1-sample-2.svg"
+        className="w-full h-full flex-1 object-cover rounded-xl" 
+        width={500}
+        height={500}
+        alt="xx99-model"
+      />
+      <Image
+        src="/mark-1-sample-3.svg"
+        className="w-full h-full flex-1 object-cover rounded-xl"
+        width={500}
+        height={500}
+        alt="xx99-dark"
+      />
+    </div>
+
+
+    <div className="w-full lg:w-[60%]">
+      <Image
+        src="/mark-1-sample.svg"
+        className="w-full h-full object-cover rounded-xl"
+        width={500}
+        height={800} 
+        alt="xx99-dark"
+      />
+    </div>
+  </div>
+</div>
       <div className="padding-container pt-20">
         <h2 className="font-bold text-center text-[32px] mb-10">
           YOU MAY ALSO LIKE
         </h2>
-        <div className="w-full flex gap-5">
-          <div className="w-[33%] flex flex-col gap-4 items-center">
+        <div className="w-full flex flex-col lg:flex-row gap-5">
+          <div className=" w-full lg:w-[33%] flex flex-col gap-4 items-center">
             <Image
               alt=""
               src="/xx99-mark-1.svg"
@@ -148,7 +151,7 @@ const page = () => {
               SEE PRODUCT
             </button>
           </div>
-          <div className="w-[33%] flex flex-col gap-4 items-center">
+          <div className=" w-full lg:w-[33%] flex flex-col gap-4 items-center">
             <Image
               alt=""
               src="/xx59-1.svg"
@@ -161,7 +164,7 @@ const page = () => {
               SEE PRODUCT
             </button>
           </div>
-          <div className="w-[33%] flex flex-col gap-4 items-center">
+          <div className=" w-full lg:w-[33%] flex flex-col gap-4 items-center">
             <Image
               alt=""
               src="/zx9-1.svg"
@@ -176,13 +179,13 @@ const page = () => {
           </div>
         </div>
       </div>
-      <div className="padding-container py-20 mt-10 flex w-full justify-between">
+      <div className="padding-container py-20 mt-10 gap-25 lg:gap-0 flex flex-col lg:flex-row w-full lg:justify-between">
         <HeroCard />
         <HeroCard />
         <HeroCard />
       </div>
-      <section className="flex padding-container gap-20 items-center mt-30">
-        <div className="flex flex-col gap-10">
+      <section className="flex flex-col-reverse lg:flex-row padding-container gap-20 items-center mt-30">
+        <div className="flex flex-col text-center lg:text-left gap-10">
           <h3 className="text-[40px]  font-bold">
             BRINGING YOU THE <br />
             <span className="text-orange-100">BEST</span> AUDIO GEAR
@@ -199,7 +202,7 @@ const page = () => {
         <Image
           src="/shared/desktop/image-best-gear.jpg"
           alt="Best gear"
-          className="rounded-lg"
+          className="rounded-lg w-full lg:w-500"
           height={500}
           width={500}
         ></Image>
