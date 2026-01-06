@@ -42,12 +42,12 @@ const page = () => {
           className="w-full lg:w-[50%]"
           alt="yx1 earphones"
         />
-        <div className="h-full flex flex-col gap-5 justify-center items-center lg:items-start max-w-[400px] text-white">
+        <div className="h-full flex flex-col gap-5 justify-center  lg:items-start max-w-[400px] text-white">
           <p className="text-orange-100 tracking-[10px]">NEW PRODUCT</p>
           <h1 className="text-2xl font-bold text-black">
             YX1 WIRELESS <br /> EARPHONES
           </h1>
-          <p className="text-black/50 text-center lg:text-left w-[400px]">
+          <p className="text-black/50 lg:text-left lg:w-[400px]">
             Tailor your listening experience with bespoke dynamic drivers from
             the new YX1 Wireless Earphones. Enjoy incredible high-fidelity sound
             even in noisy environments with its active noise cancellation
@@ -85,7 +85,7 @@ const page = () => {
       {/* Features Section - Responsive Flex */}
       <div className="padding-container flex flex-col lg:flex-row gap-30 mt-20">
         <div className="w-full lg:w-[60%]">
-          <h2 className="text-[32px] font-bold">FEATURES</h2>
+          <h2 className= "lg:text-[32px] text-2xl  font-bold">FEATURES</h2>
           <p className="text-black/50">
             Experience unrivalled stereo sound thanks to innovative acoustic
             technology. With improved ergonomics designed for full day wearing,
@@ -102,7 +102,7 @@ const page = () => {
           </p>
         </div>
         <div>
-          <h2 className="text-[32px] font-bold">IN THE BOX</h2>
+          <h2 className= "lg:text-[32px] text-2xl  font-bold">IN THE BOX</h2>
           <div>
             <div className="flex gap-4 text-black/50">
               <span className="text-orange-100">2x</span> <p>Earphone Unit</p>
@@ -158,7 +158,7 @@ const page = () => {
 
       {/* You May Also Like - Responsive Flex */}
       <div className="padding-container pt-20">
-        <h2 className="font-bold text-center text-[32px] mb-10">
+        <h2 className="font-bold text-center  lg:text-[32px] text-2xl  mb-10">
           YOU MAY ALSO LIKE
         </h2>
         <div className="w-full flex flex-col lg:flex-row gap-5">
