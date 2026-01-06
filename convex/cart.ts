@@ -3,8 +3,11 @@ import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
 
 export const getCartItems = query({
-    handler: async (ctx) => {
-        const cartItems = await ctx.db.query("cart").collect();
+    args: { deviceId: v.string() },
+    handler: async (ctx, args) => {
+        const cartItems = await ctx.db.query("cart")
+            .filter((q) => q.eq(q.field("deviceId"), args.deviceId))
+            .collect();
         const productIds = cartItems.map(item => item.productId);
         const products = await Promise.all(productIds.map(id => ctx.db.get(id)));
 
@@ -16,11 +19,12 @@ export const getCartItems = query({
 });
 
 export const addToCart = mutation({
-  args: { productId: v.id("products"), quantity: v.number() },
+  args: { productId: v.id("products"), quantity: v.number(), deviceId: v.string() },
   handler: async (ctx, args) => {
     const existingCartItem = await ctx.db
       .query("cart")
       .filter((q) => q.eq(q.field("productId"), args.productId))
+      .filter((q) => q.eq(q.field("deviceId"), args.deviceId))
       .first();
 
     if (existingCartItem) {
@@ -32,6 +36,7 @@ export const addToCart = mutation({
       await ctx.db.insert("cart", {
         productId: args.productId,
         quantity: args.quantity,
+        deviceId: args.deviceId,
       });
       console.log(`Added new product ${args.productId} to cart with quantity ${args.quantity}`);
     }
@@ -53,8 +58,11 @@ export const updateQuantity = mutation({
 });
 
 export const removeAll = mutation({
-    handler: async (ctx) => {
-        const cartItems = await ctx.db.query("cart").collect();
+    args: { deviceId: v.string() },
+    handler: async (ctx, args) => {
+        const cartItems = await ctx.db.query("cart")
+            .filter((q) => q.eq(q.field("deviceId"), args.deviceId))
+            .collect();
         for(const item of cartItems){
             await ctx.db.delete(item._id);
         }

@@ -6,18 +6,20 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useDeviceStore } from "../../store/cartStore";
 
 const page = () => {
   const router = useRouter();
   const products = useQuery(api.getProducts.getProducts);
   const addToCart = useMutation(api.cart.addToCart);
+  const { deviceId } = useDeviceStore();
   const [quantity, setQuantity] = useState(1);
 
   const handleAddToCart = () => {
     // Logic updated to find YX1
     const product = products?.find((p) => p.name === "YX1 Wireless Earphones");
     if (product) {
-      addToCart({ productId: product._id, quantity });
+      addToCart({ productId: product._id, quantity, deviceId });
     }
   };
 

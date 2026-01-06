@@ -44,5 +44,6 @@ export default defineSchema({
   cart: defineTable({
     productId: v.id("products"), // References the products table
     quantity: v.number(),
+    deviceId: v.string(),
   }),
 });

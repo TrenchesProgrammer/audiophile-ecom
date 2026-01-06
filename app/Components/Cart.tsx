@@ -1,15 +1,16 @@
 'use client'
 import { useRef, useEffect, useMemo } from 'react';
 import CartItem from './CartItem';
-import { useCartStore } from '../store/cartStore';
+import { useCartStore, useDeviceStore } from '../store/cartStore';
 import { useQuery, useMutation } from 'convex/react';
 import { api } from '../../convex/_generated/api';
 import { useRouter } from 'next/navigation';
 
 const Cart = () => {
   const { isCartOpen, closeCart } = useCartStore();
+  const { deviceId } = useDeviceStore();
   const cartRef = useRef<HTMLDivElement>(null);
-  const cartItems = useQuery(api.cart.getCartItems);
+  const cartItems = useQuery(api.cart.getCartItems, { deviceId });
   const removeAll = useMutation(api.cart.removeAll);
   const router = useRouter();
 
@@ -48,7 +49,7 @@ const Cart = () => {
       <div ref={cartRef} className="rounded-lg absolute flex flex-col gap-5 bg-white top-25 p-5 w-80 right-10">
         <div className="flex justify-between">
           <p>Cart({cartItems?.length || 0})</p>
-          <p className="text-black/50 underline" onClick={() => removeAll()}>Remove all</p>
+          <p className="text-black/50 underline" onClick={() => removeAll({ deviceId })}>Remove all</p>
         </div>
 
         {cartItems?.filter((item) => item.product !== null).map((item) => (<CartItem key={item._id} item={item as typeof item & { product: NonNullable<typeof item.product> }} />))}

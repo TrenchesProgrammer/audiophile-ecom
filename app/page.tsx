@@ -5,16 +5,18 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "../convex/_generated/api";
 import HeroCard from "./Components/HeroCard";
 import { Id } from "../convex/_generated/dataModel";
+import { useDeviceStore } from "./store/cartStore";
 
 export default function Home() {
   const products = useQuery(api.getProducts.getProducts);
   const addToCart = useMutation(api.cart.addToCart);
+  const { deviceId } = useDeviceStore();
 
   const handleAddToCart = () => {
     const product = products?.find(p => p.name === 'XX99 Mark II Headphones');
     if (product) {
       console.log('Adding to cart:', { productId: product._id, quantity: 1 });
-      addToCart({ productId: product._id, quantity: 1 });
+      addToCart({ productId: product._id, quantity: 1, deviceId });
     }
   };
 
