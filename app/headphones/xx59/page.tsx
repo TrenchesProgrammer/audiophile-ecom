@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-import { useState } from "react";
+import { useState, useEffect } from "react"; // Added useEffect
 import { useRouter } from "next/navigation";
 import { useDeviceStore } from "../../store/cartStore";
 
@@ -12,15 +12,28 @@ const page = () => {
   const router = useRouter();
   const products = useQuery(api.getProducts.getProducts);
   const addToCart = useMutation(api.cart.addToCart);
-  const { deviceId } = useDeviceStore();
+  
+  // 1. Get deviceId AND setDeviceId
+  const { deviceId, setDeviceId } = useDeviceStore();
   const [quantity, setQuantity] = useState(1);
+
+  // 2. Generate unique ID on mount
+  useEffect(() => {
+    setDeviceId();
+  }, [setDeviceId]);
 
   const handleAddToCart = () => {
     // Logic updated to find XX59
     const product = products?.find((p) => p.name === "XX59 Headphones");
-    if (product) {
-      console.log('Adding to cart:', { productId: product._id, quantity });
+    
+    // 3. Ensure product and deviceId exist before adding
+    if (product && deviceId) {
+      console.log('Adding to cart:', { productId: product._id, quantity, deviceId });
       addToCart({ productId: product._id, quantity, deviceId });
+    } else {
+        // Fallback: Try to generate ID if missing
+        setDeviceId();
+        console.warn("Device ID missing, generating now...");
     }
   };
 

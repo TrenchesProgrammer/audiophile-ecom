@@ -1,22 +1,36 @@
 'use client'
 
 import Image from "next/image";
+import Link from "next/link"; // Added Link
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../convex/_generated/api";
 import HeroCard from "./Components/HeroCard";
-import { Id } from "../convex/_generated/dataModel";
 import { useDeviceStore } from "./store/cartStore";
+import { useEffect } from "react"; // Added useEffect
 
 export default function Home() {
   const products = useQuery(api.getProducts.getProducts);
   const addToCart = useMutation(api.cart.addToCart);
-  const { deviceId } = useDeviceStore();
+  
+  // 1. Get deviceId AND setDeviceId
+  const { deviceId, setDeviceId } = useDeviceStore();
+
+  // 2. Generate unique ID on mount (Crucial for first-time visitors)
+  useEffect(() => {
+    setDeviceId();
+  }, [setDeviceId]);
 
   const handleAddToCart = () => {
     const product = products?.find(p => p.name === 'XX99 Mark II Headphones');
-    if (product) {
+    
+    // 3. Ensure product and deviceId exist before adding
+    if (product && deviceId) {
       console.log('Adding to cart:', { productId: product._id, quantity: 1 });
       addToCart({ productId: product._id, quantity: 1, deviceId });
+    } else {
+        // Fallback
+        setDeviceId();
+        console.warn("Device ID missing, generating now...");
     }
   };
 
@@ -25,10 +39,8 @@ export default function Home() {
       {/* HERO SECTION */}
       <section className="bg-hero-mobile md:bg-hero-tablet lg:bg-hero h-[70vh] lg:h-[729px] flex justify-center lg:justify-start w-full padding-container">
         <div className="h-full flex flex-col gap-5 justify-center items-center lg:items-start max-w-[400px] text-white">
-          {/* Tracking reduced significantly on mobile */}
           <p className="text-white/49 tracking-[4px] md:tracking-[10px] text-sm md:text-base">NEW PRODUCT</p>
           
-          {/* AGGRESSIVE REDUCTION: text-4xl on mobile (down from 6xl) */}
           <h1 className="text-4xl md:text-6xl font-bold text-white text-center lg:text-left leading-none md:leading-tight">
             XX99 MARK II <br /> HEADPHONES
           </h1>
@@ -37,7 +49,11 @@ export default function Home() {
             Experience natural, lifelike audio and exceptional build quality
             made for the passionate music enthusiast.
           </p>
-          <button onClick={handleAddToCart} className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-6 py-3 md:px-8 md:py-4 w-fit font-bold tracking-wider text-sm md:text-base">
+          
+          <button 
+            onClick={handleAddToCart} 
+            className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-6 py-3 md:px-8 md:py-4 w-fit font-bold tracking-wider text-sm md:text-base"
+          >
             ADD TO CART
           </button>
         </div>
@@ -63,7 +79,6 @@ export default function Home() {
               className="w-36 md:w-64 lg:w-[350px]"
             />
             <div className="flex flex-col gap-6 md:gap-8 items-center text-center lg:text-left lg:items-start justify-center">
-              {/* AGGRESSIVE REDUCTION: text-4xl on mobile */}
               <h2 className="text-4xl md:text-6xl font-bold leading-none">
                 ZX9 <br /> SPEAKER
               </h2>
@@ -71,31 +86,35 @@ export default function Home() {
                 Upgrade to premium speakers that are phenomenally built to
                 deliver truly remarkable sound.
               </p>
-              <button className="bg-black text-white px-6 py-3 md:px-8 md:py-3 w-fit cursor-pointer hover:bg-gray-800 font-bold tracking-wider text-sm md:text-base">
-                SEE PRODUCT
-              </button>
+              <Link href="/zx9-speaker">
+                <button className="bg-black text-white px-6 py-3 md:px-8 md:py-3 w-fit cursor-pointer hover:bg-gray-800 font-bold tracking-wider text-sm md:text-base">
+                    SEE PRODUCT
+                </button>
+              </Link>
             </div>
           </div>
         </div>
 
         {/* ZX7 SPEAKER SECTION */}
         <div className="mt-6 md:mt-10 bg-zx7 w-full p-6 md:p-20 h-64 md:h-80 flex flex-col justify-center rounded-lg bg-cover bg-center">
-          {/* AGGRESSIVE REDUCTION: text-2xl on mobile */}
           <h3 className="text-2xl md:text-[28px] font-bold mb-4">ZX7 SPEAKER</h3>
-          <button className="border border-black cursor-pointer hover:bg-black hover:text-white px-6 py-3 w-fit font-bold tracking-wide text-sm md:text-base">
-            SEE PRODUCT
-          </button>
+          <Link href="/zx7-speaker">
+            <button className="border border-black cursor-pointer hover:bg-black hover:text-white px-6 py-3 w-fit font-bold tracking-wide text-sm md:text-base">
+                SEE PRODUCT
+            </button>
+          </Link>
         </div>
 
         {/* YX1 EARPHONES SECTION */}
         <div className="flex flex-col md:flex-row mt-6 md:mt-10 gap-5">
           <div className="bg-yx1 rounded-lg w-full md:w-[50%] h-52 md:h-80 bg-cover bg-center"></div>
           <div className="bg-gray-100 w-full md:w-[50%] h-52 md:h-80 rounded-lg flex flex-col justify-center p-6 md:p-20">
-             {/* AGGRESSIVE REDUCTION: text-2xl on mobile */}
             <h3 className="text-2xl md:text-[28px] font-bold mb-4">YX1 EARPHONES</h3>
-            <button className="border border-black cursor-pointer hover:bg-black hover:text-white px-6 py-3 w-fit font-bold tracking-wide text-sm md:text-base">
-              SEE PRODUCT
-            </button>
+            <Link href="/yx1-earphones">
+                <button className="border border-black cursor-pointer hover:bg-black hover:text-white px-6 py-3 w-fit font-bold tracking-wide text-sm md:text-base">
+                SEE PRODUCT
+                </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -103,7 +122,6 @@ export default function Home() {
       {/* BEST AUDIO GEAR SECTION */}
       <section className="flex flex-col-reverse lg:flex-row padding-container gap-10 lg:gap-30 items-center mt-12 mb-12 md:mt-20 md:mb-20 text-center lg:text-left">
         <div className="flex flex-col gap-6 md:gap-8 lg:w-1/2">
-           {/* AGGRESSIVE REDUCTION: text-3xl on mobile (was 40px) */}
           <h3 className="text-2xl md:text-[40px] font-bold uppercase leading-tight px-2 md:px-0">
             Bringing you the <br className="hidden md:block" />
             <span className="text-orange-100">best</span> audio gear

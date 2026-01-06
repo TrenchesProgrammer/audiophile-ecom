@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-import { useState } from "react";
+import { useState, useEffect } from "react"; // Added useEffect
 import { useRouter } from "next/navigation";
 import { useDeviceStore } from "../../store/cartStore";
 
@@ -12,15 +12,28 @@ const page = () => {
   const router = useRouter();
   const products = useQuery(api.getProducts.getProducts);
   const addToCart = useMutation(api.cart.addToCart);
-  const { deviceId } = useDeviceStore();
+  
+  // 1. Get deviceId AND setDeviceId
+  const { deviceId, setDeviceId } = useDeviceStore();
   const [quantity, setQuantity] = useState(1);
 
+  // 2. Generate unique ID on mount
+  useEffect(() => {
+    setDeviceId();
+  }, [setDeviceId]);
+
   const handleAddToCart = () => {
-    // Logic updated to find ZX7
-    const product = products?.find((p) => p.name === "ZX7 Speaker");
-    if (product) {
-      console.log('Adding to cart:', { productId: product._id, quantity });
+    // Logic updated to find YX1
+    const product = products?.find((p) => p.name === "YX1 Wireless Earphones");
+    
+    // 3. Ensure product and deviceId exist before adding
+    if (product && deviceId) {
+      console.log('Adding to cart:', { productId: product._id, quantity, deviceId });
       addToCart({ productId: product._id, quantity, deviceId });
+    } else {
+        // Fallback
+        setDeviceId();
+        console.warn("Device ID missing, generating now...");
     }
   };
 
@@ -39,11 +52,11 @@ const page = () => {
       {/* Main Product Section - Responsive Flex */}
       <div className="padding-container mt-6 md:mt-10 flex flex-col lg:flex-row gap-10 lg:gap-0 items-center w-full justify-between">
         <Image
-          src="/zx7.svg"
+          src="/yx1.svg"
           width={500}
           height={500}
           className="w-full lg:w-[50%] object-contain"
-          alt="zx7 speaker"
+          alt="yx1 earphones"
         />
         <div className="h-full flex flex-col gap-5 justify-center lg:items-start max-w-[500px] text-black">
           <p className="text-orange-100 tracking-[10px] text-sm md:text-base">
@@ -52,16 +65,17 @@ const page = () => {
           
           {/* Responsive Header: 2xl mobile -> 5xl desktop */}
           <h1 className="text-2xl md:text-5xl font-bold text-black leading-none md:leading-tight">
-            ZX7 <br /> SPEAKER
+            YX1 WIRELESS <br /> EARPHONES
           </h1>
           
           <p className="text-black/50 w-full lg:w-[400px] text-[15px] leading-relaxed">
-            Stream high quality sound wirelessly with minimal to no loss. The
-            ZX7 speaker uses high-end audiophile components that represents the
-            top of the line powered speakers for home or studio use.
+            Tailor your listening experience with bespoke dynamic drivers from
+            the new YX1 Wireless Earphones. Enjoy incredible high-fidelity sound
+            even in noisy environments with its active noise cancellation
+            feature.
           </p>
           
-          <p className="text-2xl font-bold text-black">$ 3,500</p>
+          <p className="text-2xl font-bold text-black">$ 599</p>
           
           <div className="flex gap-5">
             {/* Interactive Quantity Selector */}
@@ -98,18 +112,18 @@ const page = () => {
             FEATURES
           </h2>
           <p className="text-black/50 leading-relaxed text-[15px]">
-            Reap the advantages of a flat diaphragm tweeter cone. This provides
-            a fast response rate and excellent high frequencies that lower
-            tiered bookshelf speakers cannot provide. The woofers are made from
-            aluminum that produces a unique and clear sound. XLR inputs allow
-            you to connect to a mixer for more advanced usage. <br />
-            <br /> The ZX7 speaker is the perfect blend of stylish design and
-            high performance. It houses an encased MDF wooden enclosure which
-            minimises acoustic resonance. Dual connectivity allows pairing
-            through bluetooth or traditional optical and RCA input. Switch input
-            sources and control volume at your finger tips with the included
-            wireless remote. This versatile speaker is equipped to deliver an
-            authentic listening experience.
+            Experience unrivalled stereo sound thanks to innovative acoustic
+            technology. With improved ergonomics designed for full day wearing,
+            these revolutionary earphones have been finely crafted to provide
+            you with the perfect fit, delivering complete comfort all day long
+            while enjoying exceptional noise isolation and truly immersive
+            sound. <br /> <br /> The YX1 Wireless Earphones features
+            customizable controls for volume, music, calls, and voice assistants
+            built into both earbuds. The new 7-hour battery life can be extended
+            up to 28 hours with the charging case, giving you uninterrupted play
+            time. Exquisite craftsmanship with a splash resistant design now
+            available in an all new white and grey color scheme as well as the
+            popular classic black.
           </p>
         </div>
         <div className="w-full lg:w-[40%]">
@@ -118,22 +132,21 @@ const page = () => {
           </h2>
           <div className="flex flex-col gap-2">
             <div className="flex gap-6 text-black/50">
-              <span className="text-orange-100 font-bold">2x</span> <p>Speaker Unit</p>
+              <span className="text-orange-100 font-bold">2x</span> <p>Earphone Unit</p>
             </div>
             <div className="flex gap-6 text-black/50">
-              <span className="text-orange-100 font-bold">2x</span>{" "}
-              <p>Speaker Cloth Panel</p>
+              <span className="text-orange-100 font-bold">6x</span>{" "}
+              <p>Multi-size Earplugs</p>
             </div>
             <div className="flex gap-6 text-black/50">
               <span className="text-orange-100 font-bold">1x</span> <p>User Manual</p>
             </div>
             <div className="flex gap-6 text-black/50">
               <span className="text-orange-100 font-bold">1x</span>{" "}
-              <p>3.5mm 5m Audio Cable</p>
+              <p>USB-C Charging Cable</p>
             </div>
             <div className="flex gap-6 text-black/50">
-              <span className="text-orange-100 font-bold">1x</span>{" "}
-              <p>7.5m Optical Cable</p>
+              <span className="text-orange-100 font-bold">1x</span> <p>Travel Pouch </p>
             </div>
           </div>
         </div>
@@ -144,27 +157,27 @@ const page = () => {
         <div className="flex flex-col lg:flex-row gap-5 lg:gap-8">
           <div className="flex flex-1 flex-col justify-between gap-5 lg:gap-8">
             <Image
-              src="/zx7-sample-2.svg"
+              src="/yx1-sample-2.svg"
               className="w-full h-full object-cover rounded-xl"
               width={500}
               height={500}
-              alt="zx7-sample-2"
+              alt="yx1-model"
             />
             <Image
-              src="/zx7-sample-3.svg"
+              src="/yx1-sample-3.svg"
               className="w-full h-full object-cover rounded-xl"
               width={500}
               height={500}
-              alt="zx7-sample-3"
+              alt="yx1-earphones"
             />
           </div>
           <div className="w-full lg:w-[60%]">
             <Image
-              src="/zx7-sample.svg"
+              src="/yx1-sample.svg"
               className="w-full h-full object-cover rounded-xl"
               width={500}
               height={800}
-              alt="zx7-main-sample"
+              alt="yx1-gallery"
             />
           </div>
         </div>
@@ -181,23 +194,6 @@ const page = () => {
           <div className="w-full md:w-[33%] flex flex-col gap-6 items-center">
             <Image
               alt=""
-              src="/zx9-1.svg"
-              height={300}
-              width={300}
-              className="w-full rounded-xl"
-            />
-            <h3 className="font-bold text-xl">ZX9 SPEAKER</h3>
-            <Link href="/zx9-speaker">
-              <button className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-6 py-3 md:px-8 md:py-3 w-fit font-bold tracking-wide text-sm md:text-base">
-                SEE PRODUCT
-              </button>
-            </Link>
-          </div>
-
-          {/* Suggestion 2 */}
-          <div className="w-full md:w-[33%] flex flex-col gap-6 items-center">
-            <Image
-              alt=""
               src="/xx99-mark-1.svg"
               height={300}
               width={300}
@@ -211,7 +207,7 @@ const page = () => {
             </Link>
           </div>
 
-          {/* Suggestion 3 */}
+          {/* Suggestion 2 */}
           <div className="w-full md:w-[33%] flex flex-col gap-6 items-center">
             <Image
               alt=""
@@ -222,6 +218,23 @@ const page = () => {
             />
             <h3 className="font-bold text-xl">XX59</h3>
             <Link href="/xx59-headphones">
+              <button className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-6 py-3 md:px-8 md:py-3 w-fit font-bold tracking-wide text-sm md:text-base">
+                SEE PRODUCT
+              </button>
+            </Link>
+          </div>
+
+          {/* Suggestion 3 */}
+          <div className="w-full md:w-[33%] flex flex-col gap-6 items-center">
+            <Image
+              alt=""
+              src="/zx9-1.svg"
+              height={300}
+              width={300}
+              className="w-full rounded-xl"
+            />
+            <h3 className="font-bold text-xl">ZX9 SPEAKER</h3>
+            <Link href="/zx9-speaker">
               <button className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-6 py-3 md:px-8 md:py-3 w-fit font-bold tracking-wide text-sm md:text-base">
                 SEE PRODUCT
               </button>

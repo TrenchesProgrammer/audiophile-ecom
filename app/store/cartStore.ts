@@ -22,8 +22,9 @@ type DeviceStore = {
 export const useDeviceStore = create<DeviceStore>()(
   persist(
     (set, get) => ({
-      deviceId: '', // Default initial state
+      deviceId: '',
       setDeviceId: () => {
+        // Only generate a new ID if one doesn't exist
         const currentId = get().deviceId;
         if (!currentId) {
           set({ deviceId: uuidv4() });
@@ -31,8 +32,8 @@ export const useDeviceStore = create<DeviceStore>()(
       },
     }),
     {
-      name: 'device-storage', // key in localStorage
-      storage: createJSONStorage(() => localStorage), // use localStorage
+      name: 'device-storage', // Key in localStorage
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );

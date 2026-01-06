@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-import { useState } from "react";
+import { useState, useEffect } from "react"; // Added useEffect
 import { useRouter } from "next/navigation";
 import { useDeviceStore } from "../../store/cartStore";
 
@@ -12,15 +12,28 @@ const page = () => {
   const router = useRouter();
   const products = useQuery(api.getProducts.getProducts);
   const addToCart = useMutation(api.cart.addToCart);
-  const { deviceId } = useDeviceStore();
+  
+  // 1. Get deviceId AND setDeviceId
+  const { deviceId, setDeviceId } = useDeviceStore();
   const [quantity, setQuantity] = useState(1);
 
+  // 2. Generate unique ID on mount
+  useEffect(() => {
+    setDeviceId();
+  }, [setDeviceId]);
+
   const handleAddToCart = () => {
-    // Logic updated to find ZX9
-    const product = products?.find((p) => p.name === "ZX9 Speaker");
-    if (product) {
-      console.log('Adding to cart:', { productId: product._id, quantity });
+    // Logic updated to find ZX7
+    const product = products?.find((p) => p.name === "ZX7 Speaker");
+    
+    // 3. Ensure product and deviceId exist before adding
+    if (product && deviceId) {
+      console.log('Adding to cart:', { productId: product._id, quantity, deviceId });
       addToCart({ productId: product._id, quantity, deviceId });
+    } else {
+        // Fallback
+        setDeviceId();
+        console.warn("Device ID missing, generating now...");
     }
   };
 
@@ -39,11 +52,11 @@ const page = () => {
       {/* Main Product Section - Responsive Flex */}
       <div className="padding-container mt-6 md:mt-10 flex flex-col lg:flex-row gap-10 lg:gap-0 items-center w-full justify-between">
         <Image
-          src="/zx9.svg"
+          src="/zx7.svg"
           width={500}
           height={500}
           className="w-full lg:w-[50%] object-contain"
-          alt="zx9 speaker"
+          alt="zx7 speaker"
         />
         <div className="h-full flex flex-col gap-5 justify-center lg:items-start max-w-[500px] text-black">
           <p className="text-orange-100 tracking-[10px] text-sm md:text-base">
@@ -52,17 +65,16 @@ const page = () => {
           
           {/* Responsive Header: 2xl mobile -> 5xl desktop */}
           <h1 className="text-2xl md:text-5xl font-bold text-black leading-none md:leading-tight">
-            ZX9 <br /> SPEAKER
+            ZX7 <br /> SPEAKER
           </h1>
           
           <p className="text-black/50 w-full lg:w-[400px] text-[15px] leading-relaxed">
-            Upgrade your sound system with the all new ZX9 active speaker. It’s
-            a bookshelf speaker system that offers truly wireless connectivity
-            -- creating new possibilities for more pleasing and practical audio
-            setups.
+            Stream high quality sound wirelessly with minimal to no loss. The
+            ZX7 speaker uses high-end audiophile components that represents the
+            top of the line powered speakers for home or studio use.
           </p>
           
-          <p className="text-2xl font-bold text-black">$ 4,500</p>
+          <p className="text-2xl font-bold text-black">$ 3,500</p>
           
           <div className="flex gap-5">
             {/* Interactive Quantity Selector */}
@@ -99,18 +111,18 @@ const page = () => {
             FEATURES
           </h2>
           <p className="text-black/50 leading-relaxed text-[15px]">
-            Connect via Bluetooth or nearly any wired source. This speaker
-            features optical, digital coaxial, USB Type-B, stereo RCA, and
-            stereo XLR inputs, allowing you to have up to five wired source
-            devices connected for easy switching. Improved bluetooth technology
-            offers near lossless audio quality at up to 328ft (100m). <br />
-            <br /> Discover clear, more natural sounding highs than the
-            competition with ZX9’s signature planar diaphragm tweeter. Equally
-            important is its powerful room-shaking bass courtesy of a 6.5”
-            aluminum alloy bass unit. You’ll be able to enjoy equal sound
-            quality whether in a large room or small den. Furthermore, you will
-            experience new sensations from old songs since it can respond to
-            even the subtle waveforms.
+            Reap the advantages of a flat diaphragm tweeter cone. This provides
+            a fast response rate and excellent high frequencies that lower
+            tiered bookshelf speakers cannot provide. The woofers are made from
+            aluminum that produces a unique and clear sound. XLR inputs allow
+            you to connect to a mixer for more advanced usage. <br />
+            <br /> The ZX7 speaker is the perfect blend of stylish design and
+            high performance. It houses an encased MDF wooden enclosure which
+            minimises acoustic resonance. Dual connectivity allows pairing
+            through bluetooth or traditional optical and RCA input. Switch input
+            sources and control volume at your finger tips with the included
+            wireless remote. This versatile speaker is equipped to deliver an
+            authentic listening experience.
           </p>
         </div>
         <div className="w-full lg:w-[40%]">
@@ -130,11 +142,11 @@ const page = () => {
             </div>
             <div className="flex gap-6 text-black/50">
               <span className="text-orange-100 font-bold">1x</span>{" "}
-              <p>3.5mm 10m Audio Cable</p>
+              <p>3.5mm 5m Audio Cable</p>
             </div>
             <div className="flex gap-6 text-black/50">
               <span className="text-orange-100 font-bold">1x</span>{" "}
-              <p>10m Optical Cable</p>
+              <p>7.5m Optical Cable</p>
             </div>
           </div>
         </div>
@@ -145,27 +157,27 @@ const page = () => {
         <div className="flex flex-col lg:flex-row gap-5 lg:gap-8">
           <div className="flex flex-1 flex-col justify-between gap-5 lg:gap-8">
             <Image
-              src="/zx9-sample-2.svg"
+              src="/zx7-sample-2.svg"
               className="w-full h-full object-cover rounded-xl"
               width={500}
               height={500}
-              alt="zx9-sample-2"
+              alt="zx7-sample-2"
             />
             <Image
-              src="/zx9-sample-3.svg"
+              src="/zx7-sample-3.svg"
               className="w-full h-full object-cover rounded-xl"
               width={500}
               height={500}
-              alt="zx9-sample-3"
+              alt="zx7-sample-3"
             />
           </div>
           <div className="w-full lg:w-[60%]">
             <Image
-              src="/zx9-sample.svg"
+              src="/zx7-sample.svg"
               className="w-full h-full object-cover rounded-xl"
               width={500}
               height={800}
-              alt="zx9-main-sample"
+              alt="zx7-main-sample"
             />
           </div>
         </div>
@@ -178,17 +190,17 @@ const page = () => {
         </h2>
         <div className="w-full flex flex-col md:flex-row gap-8 lg:gap-8">
           
-          {/* Suggestion 1 - ZX7 (Swapped since we are on ZX9 page) */}
+          {/* Suggestion 1 */}
           <div className="w-full md:w-[33%] flex flex-col gap-6 items-center">
             <Image
               alt=""
-              src="/zx7-1.svg" 
+              src="/zx9-1.svg"
               height={300}
               width={300}
               className="w-full rounded-xl"
             />
-            <h3 className="font-bold text-xl">ZX7 SPEAKER</h3>
-            <Link href="/zx7-speaker">
+            <h3 className="font-bold text-xl">ZX9 SPEAKER</h3>
+            <Link href="/zx9-speaker">
               <button className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-6 py-3 md:px-8 md:py-3 w-fit font-bold tracking-wide text-sm md:text-base">
                 SEE PRODUCT
               </button>

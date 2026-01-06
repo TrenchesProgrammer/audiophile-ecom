@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-import { useState } from "react";
+import { useState, useEffect } from "react"; // 1. Import useEffect
 import { useRouter } from "next/navigation";
 import { useDeviceStore } from "../../store/cartStore";
 
@@ -12,14 +12,26 @@ const page = () => {
   const router = useRouter();
   const products = useQuery(api.getProducts.getProducts);
   const addToCart = useMutation(api.cart.addToCart);
-  const { deviceId } = useDeviceStore();
+  
+  // 2. Get the setter and the ID
+  const { deviceId, setDeviceId } = useDeviceStore();
   const [quantity, setQuantity] = useState(1);
+
+  // 3. Generate ID on mount (Fixes the shared cart issue)
+  useEffect(() => {
+    setDeviceId();
+  }, [setDeviceId]);
 
   const handleAddToCart = () => {
     const product = products?.find((p) => p.name === "XX99 Mark I Headphones");
-    if (product) {
-      console.log("Adding to cart:", { productId: product._id, quantity });
+    // 4. Ensure we have both product and deviceId before adding
+    if (product && deviceId) {
+      console.log("Adding to cart:", { productId: product._id, quantity, deviceId });
       addToCart({ productId: product._id, quantity, deviceId });
+    } else {
+      // Optional: Force generation if missing (fallback)
+      setDeviceId();
+      console.warn("Device ID missing, trying to generate...");
     }
   };
 
@@ -35,7 +47,7 @@ const page = () => {
         Go Back
       </p>
 
-      {/* Main Product Section - Responsive Flex */}
+      {/* Main Product Section */}
       <div className="padding-container mt-6 md:mt-10 flex flex-col lg:flex-row gap-10 lg:gap-0 items-center w-full justify-between">
         <Image
           src="/xx99-mark-1.svg"
@@ -89,7 +101,7 @@ const page = () => {
         </div>
       </div>
 
-      {/* Features Section - Responsive Flex */}
+      {/* Features Section */}
       <div className="padding-container flex flex-col lg:flex-row gap-20 lg:gap-30 mt-16 md:mt-20">
         <div className="w-full lg:w-[60%]">
           <h2 className="lg:text-[32px] text-2xl font-bold mb-6 md:mb-8">
@@ -134,7 +146,7 @@ const page = () => {
         </div>
       </div>
 
-      {/* Gallery Section - Responsive Grid Layout */}
+      {/* Gallery Section */}
       <div className="padding-container mt-16 md:mt-20">
         <div className="flex flex-col lg:flex-row gap-5 lg:gap-8">
           <div className="flex flex-1 flex-col justify-between gap-5 lg:gap-8">
@@ -165,13 +177,12 @@ const page = () => {
         </div>
       </div>
 
-      {/* You May Also Like - Responsive Flex */}
+      {/* You May Also Like */}
       <div className="padding-container pt-16 md:pt-20">
         <h2 className="font-bold text-center lg:text-[32px] text-2xl mb-10">
           YOU MAY ALSO LIKE
         </h2>
         <div className="w-full flex flex-col md:flex-row gap-8 lg:gap-8">
-          {/* Suggestion 1 */}
           <div className="w-full md:w-[33%] flex flex-col gap-6 items-center">
             <Image
               alt="xx99 mark ii"
@@ -188,7 +199,6 @@ const page = () => {
             </Link>
           </div>
 
-          {/* Suggestion 2 */}
           <div className="w-full md:w-[33%] flex flex-col gap-6 items-center">
             <Image
               alt="xx59"
@@ -205,7 +215,6 @@ const page = () => {
             </Link>
           </div>
 
-          {/* Suggestion 3 */}
           <div className="w-full md:w-[33%] flex flex-col gap-6 items-center">
             <Image
               alt="zx9 speaker"
@@ -230,10 +239,9 @@ const page = () => {
         <HeroCard />
       </div>
 
-      {/* Best Gear - Responsive Flex */}
+      {/* Best Gear Section */}
       <section className="flex flex-col-reverse lg:flex-row padding-container gap-10 lg:gap-20 items-center mt-12 mb-20">
         <div className="flex flex-col text-center lg:text-left gap-6 md:gap-10 lg:w-1/2">
-          {/* Responsive Header: 2xl mobile -> 40px desktop */}
           <h3 className="text-2xl md:text-[40px] font-bold uppercase leading-tight">
             BRINGING YOU THE <br className="hidden md:block" />
             <span className="text-orange-100">BEST</span> AUDIO GEAR

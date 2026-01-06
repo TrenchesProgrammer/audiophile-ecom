@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-import { useState } from "react";
+import { useState, useEffect } from "react"; // Added useEffect
 import { useRouter } from "next/navigation";
 import { useDeviceStore } from "../../store/cartStore";
 
@@ -12,14 +12,27 @@ const page = () => {
   const router = useRouter();
   const products = useQuery(api.getProducts.getProducts);
   const addToCart = useMutation(api.cart.addToCart);
-  const { deviceId } = useDeviceStore();
+  
+  // 1. Get deviceId AND setDeviceId
+  const { deviceId, setDeviceId } = useDeviceStore();
   const [quantity, setQuantity] = useState(1);
+
+  // 2. Generate unique ID on mount
+  useEffect(() => {
+    setDeviceId();
+  }, [setDeviceId]);
 
   const handleAddToCart = () => {
     const product = products?.find((p) => p.name === "XX99 Mark II Headphones");
-    if (product) {
-      console.log("Adding to cart:", { productId: product._id, quantity });
+    
+    // 3. Ensure product and deviceId exist before adding
+    if (product && deviceId) {
+      console.log("Adding to cart:", { productId: product._id, quantity, deviceId });
       addToCart({ productId: product._id, quantity, deviceId });
+    } else {
+        // Fallback: Try to generate ID if missing
+        setDeviceId();
+        console.warn("Device ID missing, generating now...");
     }
   };
 
@@ -45,13 +58,13 @@ const page = () => {
           alt="xx99 mark ii"
         />
         
-        {/* Left-aligned text container (matches YX1/Mark I style) */}
+        {/* Left-aligned text container */}
         <div className="h-full flex flex-col gap-5 justify-center lg:items-start max-w-[500px] text-black">
           <p className="text-orange-100 tracking-[10px] text-sm md:text-base">
             NEW PRODUCT
           </p>
 
-          {/* Responsive Header: 2xl mobile -> 5xl desktop */}
+          {/* Responsive Header */}
           <h1 className="text-2xl md:text-5xl font-bold text-black leading-none md:leading-tight">
             XX99 MARK II <br /> HEADPHONES
           </h1>
@@ -143,7 +156,7 @@ const page = () => {
         </div>
       </div>
 
-      {/* Gallery Section - Mark I Style Layout */}
+      {/* Gallery Section */}
       <div className="padding-container mt-16 md:mt-20">
         <div className="flex flex-col lg:flex-row gap-5 lg:gap-8">
           <div className="flex flex-1 flex-col justify-between gap-5 lg:gap-8">
@@ -243,7 +256,6 @@ const page = () => {
       {/* Best Gear Section */}
       <section className="flex flex-col-reverse lg:flex-row padding-container gap-10 lg:gap-20 items-center mt-12 mb-20">
         <div className="flex flex-col text-center lg:text-left gap-6 md:gap-10 lg:w-1/2">
-          {/* Responsive Header: 2xl mobile -> 40px desktop */}
           <h3 className="text-2xl md:text-[40px] font-bold uppercase leading-tight">
             BRINGING YOU THE <br className="hidden md:block" />
             <span className="text-orange-100">BEST</span> AUDIO GEAR
