@@ -3,9 +3,11 @@ import { useQuery } from 'convex/react'
 import { api } from '../../convex/_generated/api'
 import { useMemo } from 'react'
 import { useRouter } from 'next/navigation'
+import { useDeviceStore } from '../store/cartStore'
 
 const CheckoutPage = () => {
-    const cartItems = useQuery(api.cart.getCartItems)
+    const { deviceId } = useDeviceStore()
+    const cartItems = useQuery(api.cart.getCartItems, { deviceId })
     const router = useRouter()
 
     const total = useMemo(() => {

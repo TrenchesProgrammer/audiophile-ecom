@@ -157,7 +157,6 @@ const page = () => {
           </div>
         </div>
       </div>
-
       {/* You May Also Like - Responsive Flex */}
       <div className="padding-container pt-20">
         <h2 className="font-bold text-center  lg:text-[32px] text-2xl  mb-10">
