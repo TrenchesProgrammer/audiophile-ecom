@@ -17,7 +17,6 @@ const page = () => {
     // Logic updated to find YX1
     const product = products?.find((p) => p.name === "YX1 Wireless Earphones");
     if (product) {
-      console.log('Adding to cart:', { productId: product._id, quantity });
       addToCart({ productId: product._id, quantity });
     }
   };
@@ -45,7 +44,7 @@ const page = () => {
         />
         <div className="h-full flex flex-col gap-5 justify-center items-center lg:items-start max-w-[400px] text-white">
           <p className="text-orange-100 tracking-[10px]">NEW PRODUCT</p>
-          <h1 className="text-3xl font-bold text-black">
+          <h1 className="text-2xl font-bold text-black">
             YX1 WIRELESS <br /> EARPHONES
           </h1>
           <p className="text-black/50 text-center lg:text-left w-[400px]">
@@ -54,7 +53,7 @@ const page = () => {
             even in noisy environments with its active noise cancellation
             feature.
           </p>
-          <p className="font-bold text-black">$ 599</p>
+          <p className="text-2xl font-bold text-black">$ 599</p>
           <div className="flex gap-5">
             {/* Interactive Quantity Selector */}
             <div className=" text-black/25 bg-white-200 font-bold w-35 px-4 py-5 flex justify-between ">
@@ -214,7 +213,7 @@ const page = () => {
       {/* Best Gear - Responsive Flex */}
       <section className="flex flex-col-reverse lg:flex-row padding-container gap-20 items-center mt-30">
         <div className="flex flex-col text-center lg:text-left gap-10">
-          <h3 className="text-[40px]  font-bold">
+          <h3 className="text-2xl md:text-[40px]  font-bold">
             BRINGING YOU THE <br />
             <span className="text-orange-100">BEST</span> AUDIO GEAR
           </h3>
