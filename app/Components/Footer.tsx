@@ -27,13 +27,13 @@ const Footer = () => {
         </div>
         <div className="flex items-center md:items-end mt-10 w-full flex-col md:flex-row  justify-between">
           <div className="text-white/50 flex flex-col gap-10">
-            <p className="min-w-100">
+            <p className="text-sm md:text-md lg:min-w-100">
               Audiophile is an all in one stop to fulfill your audio needs.
               We're a small team of music lovers and sound specialists who are
               devoted to helping you get the most out of personal audio. Come
               and visit our demo facility - we’re open 7 days a week.
             </p>
-            <p>Copyright 2021. All Rights Reserved</p>
+            <p className="text-sm md:text-md" >Copyright 2021. All Rights Reserved</p>
           </div>
           <ul className="flex gap-5 mt-5">
             <li>
