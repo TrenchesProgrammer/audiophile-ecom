@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import { v4 as uuidv4 } from 'uuid';
 
 type CartStore = {
@@ -14,24 +15,24 @@ export const useCartStore = create<CartStore>((set) => ({
 }));
 
 type DeviceStore = {
-    deviceId: string;
+  deviceId: string;
+  setDeviceId: () => void;
 };
 
-export const useDeviceStore = create<DeviceStore>((set) => {
-    // Initialize with empty string to prevent server crash
-    let deviceId = '';
-
-    // FIX: Only access localStorage if we are in the browser (window is defined)
-    if (typeof window !== 'undefined') {
-        deviceId = localStorage.getItem('deviceId') || '';
-        
-        if (!deviceId) {
-            deviceId = uuidv4();
-            localStorage.setItem('deviceId', deviceId);
+export const useDeviceStore = create<DeviceStore>()(
+  persist(
+    (set, get) => ({
+      deviceId: '', // Default initial state
+      setDeviceId: () => {
+        const currentId = get().deviceId;
+        if (!currentId) {
+          set({ deviceId: uuidv4() });
         }
+      },
+    }),
+    {
+      name: 'device-storage', // key in localStorage
+      storage: createJSONStorage(() => localStorage), // use localStorage
     }
-
-    return {
-        deviceId,
-    }
-});
+  )
+);
