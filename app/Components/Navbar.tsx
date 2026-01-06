@@ -42,11 +42,11 @@ const Navbar = () => {
       </div>
       {isMenuOpen && (
         <div className="lg:hidden absolute top-0 left-0 w-full h-screen bg-black/50 z-50">
-          <div className="bg-white w-4/5 h-full p-6">
+          <div className="bg-black w-4/5 h-full p-6">
             <button onClick={toggleMenu} className="mb-8">
               <Image src="/icon-close.svg" alt="close" height={20} width={20} />
             </button>
-            <ul className="text-black font-bold text-lg flex flex-col gap-4">
+            <ul className="text-white font-bold text-lg flex flex-col gap-4">
               <li>
                 <Link href="/" onClick={toggleMenu}>HOME</Link>
               </li>
