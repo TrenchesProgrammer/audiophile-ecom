@@ -192,7 +192,7 @@ const page = () => {
               className="w-full rounded-xl"
             />
             <h3 className="font-bold text-xl">XX99 MARK II</h3>
-            <Link href="/xx99-mark-two-headphones">
+            <Link href="/headphones/mark-2">
               <button className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-6 py-3 md:px-8 md:py-3 w-fit font-bold tracking-wide text-sm md:text-base">
                 SEE PRODUCT
               </button>
@@ -208,7 +208,7 @@ const page = () => {
               className="w-full rounded-xl"
             />
             <h3 className="font-bold text-xl">XX59</h3>
-            <Link href="/xx59-headphones">
+            <Link href="/headphones/xx59">
               <button className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-6 py-3 md:px-8 md:py-3 w-fit font-bold tracking-wide text-sm md:text-base">
                 SEE PRODUCT
               </button>
@@ -224,7 +224,7 @@ const page = () => {
               className="w-full rounded-xl"
             />
             <h3 className="font-bold text-xl">ZX9 SPEAKER</h3>
-            <Link href="/zx9-speaker">
+            <Link href="/speakers/zx9">
               <button className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-6 py-3 md:px-8 md:py-3 w-fit font-bold tracking-wide text-sm md:text-base">
                 SEE PRODUCT
               </button>
@@ -234,9 +234,13 @@ const page = () => {
       </div>
 
       <div className="padding-container py-16 md:py-20 mt-10 gap-16 md:gap-8 flex flex-col lg:flex-row w-full lg:justify-between">
-        <HeroCard />
-        <HeroCard />
-        <HeroCard />
+        {[
+          { imageUrl: "/shared/desktop/image-category-thumbnail-headphones.png", title: "HEADPHONES", linkUrl: "/headphones" },
+          { imageUrl: "/shared/desktop/image-category-thumbnail-speakers.png", title: "SPEAKERS", linkUrl: "/speakers" },
+          { imageUrl: "/shared/desktop/image-category-thumbnail-earphones.png", title: "EARPHONES", linkUrl: "/earphones" },
+        ].map((category, index) => (
+          <HeroCard key={index} imageUrl={category.imageUrl} title={category.title} linkUrl={category.linkUrl} />
+        ))}
       </div>
 
       {/* Best Gear Section */}

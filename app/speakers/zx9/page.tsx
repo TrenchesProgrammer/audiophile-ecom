@@ -24,7 +24,7 @@ const page = () => {
 
   const handleAddToCart = () => {
     // Logic updated to find ZX7
-    const product = products?.find((p) => p.name === "ZX7 Speaker");
+    const product = products?.find((p) => p.name === "ZX9 Speaker");
     
     // 3. Ensure product and deviceId exist before adding
     if (product && deviceId) {
@@ -52,7 +52,7 @@ const page = () => {
       {/* Main Product Section - Responsive Flex */}
       <div className="padding-container mt-6 md:mt-10 flex flex-col lg:flex-row gap-10 lg:gap-0 items-center w-full justify-between">
         <Image
-          src="/zx7.svg"
+          src="/zx9.svg"
           width={500}
           height={500}
           className="w-full lg:w-[50%] object-contain"
@@ -65,16 +65,17 @@ const page = () => {
           
           {/* Responsive Header: 2xl mobile -> 5xl desktop */}
           <h1 className="text-2xl md:text-5xl font-bold text-black leading-none md:leading-tight">
-            ZX7 <br /> SPEAKER
+            ZX9 <br /> SPEAKER
           </h1>
           
           <p className="text-black/50 w-full lg:w-[400px] text-[15px] leading-relaxed">
-            Stream high quality sound wirelessly with minimal to no loss. The
-            ZX7 speaker uses high-end audiophile components that represents the
-            top of the line powered speakers for home or studio use.
+            Upgrade your sound system with the all new ZX9 active speaker. It’s
+            a bookshelf speaker system that offers truly wireless connectivity
+            -- creating new possibilities for more pleasing and practical audio
+            setups.
           </p>
           
-          <p className="text-2xl font-bold text-black">$ 3,500</p>
+          <p className="text-2xl font-bold text-black">$ 4,500</p>
           
           <div className="flex gap-5">
             {/* Interactive Quantity Selector */}
@@ -193,14 +194,14 @@ const page = () => {
           {/* Suggestion 1 */}
           <div className="w-full md:w-[33%] flex flex-col gap-6 items-center">
             <Image
-              alt=""
-              src="/zx9-1.svg"
+              alt="zx7 speaker"
+              src="/zx7.svg"
               height={300}
               width={300}
               className="w-full rounded-xl"
             />
-            <h3 className="font-bold text-xl">ZX9 SPEAKER</h3>
-            <Link href="/zx9-speaker">
+            <h3 className="font-bold text-xl">ZX7 SPEAKER</h3>
+            <Link href="/speakers/zx7">
               <button className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-6 py-3 md:px-8 md:py-3 w-fit font-bold tracking-wide text-sm md:text-base">
                 SEE PRODUCT
               </button>
@@ -210,14 +211,14 @@ const page = () => {
           {/* Suggestion 2 */}
           <div className="w-full md:w-[33%] flex flex-col gap-6 items-center">
             <Image
-              alt=""
-              src="/xx99-mark-1.svg"
+              alt="xx99 mark i"
+              src="/xx99-mark-one.svg"
               height={300}
               width={300}
               className="w-full rounded-xl"
             />
             <h3 className="font-bold text-xl">XX99 MARK I</h3>
-            <Link href="/xx99-mark-one-headphones">
+            <Link href="/headphones/mark-1">
               <button className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-6 py-3 md:px-8 md:py-3 w-fit font-bold tracking-wide text-sm md:text-base">
                 SEE PRODUCT
               </button>
@@ -227,14 +228,14 @@ const page = () => {
           {/* Suggestion 3 */}
           <div className="w-full md:w-[33%] flex flex-col gap-6 items-center">
             <Image
-              alt=""
+              alt="xx59"
               src="/xx59-1.svg"
               height={300}
               width={300}
               className="w-full rounded-xl"
             />
             <h3 className="font-bold text-xl">XX59</h3>
-            <Link href="/xx59-headphones">
+            <Link href="/headphones/xx59">
               <button className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-6 py-3 md:px-8 md:py-3 w-fit font-bold tracking-wide text-sm md:text-base">
                 SEE PRODUCT
               </button>
@@ -244,9 +245,13 @@ const page = () => {
       </div>
 
       <div className="padding-container py-16 md:py-20 mt-10 gap-16 md:gap-8 flex flex-col lg:flex-row w-full lg:justify-between">
-        <HeroCard />
-        <HeroCard />
-        <HeroCard />
+        {[
+          { imageUrl: "/shared/desktop/image-category-thumbnail-headphones.png", title: "HEADPHONES", linkUrl: "/headphones" },
+          { imageUrl: "/shared/desktop/image-category-thumbnail-speakers.png", title: "SPEAKERS", linkUrl: "/speakers" },
+          { imageUrl: "/shared/desktop/image-category-thumbnail-earphones.png", title: "EARPHONES", linkUrl: "/earphones" },
+        ].map((category, index) => (
+          <HeroCard key={index} imageUrl={category.imageUrl} title={category.title} linkUrl={category.linkUrl} />
+        ))}
       </div>
 
       {/* Best Gear Section */}

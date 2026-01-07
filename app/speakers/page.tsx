@@ -38,7 +38,7 @@ const page = () => {
             -- creating new possibilities for more pleasing and practical audio
             setups.
           </p>
-          <Link href="/zx9-speaker">
+          <Link href="/speakers/zx9">
             <button className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-6 py-3 md:px-8 md:py-4 w-fit font-bold tracking-wide text-sm md:text-base">
               SEE PRODUCT
             </button>
@@ -65,7 +65,7 @@ const page = () => {
             represents the top of the line powered speakers for home or studio
             use.
           </p>
-          <Link href="/zx7-speaker">
+          <Link href="/speakers/zx7">
             <button className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-6 py-3 md:px-8 md:py-4 w-fit font-bold tracking-wide text-sm md:text-base">
               SEE PRODUCT
             </button>
@@ -82,9 +82,13 @@ const page = () => {
 
       {/* Category Links */}
       <div className="padding-container py-12 md:py-20 mt-10 gap-16 md:gap-8 flex flex-col lg:flex-row w-full lg:justify-between">
-        <HeroCard />
-        <HeroCard />
-        <HeroCard />
+        {[
+          { imageUrl: "/shared/desktop/image-category-thumbnail-headphones.png", title: "HEADPHONES", linkUrl: "/headphones" },
+          { imageUrl: "/shared/desktop/image-category-thumbnail-speakers.png", title: "SPEAKERS", linkUrl: "/speakers" },
+          { imageUrl: "/shared/desktop/image-category-thumbnail-earphones.png", title: "EARPHONES", linkUrl: "/earphones" },
+        ].map((category, index) => (
+          <HeroCard key={index} imageUrl={category.imageUrl} title={category.title} linkUrl={category.linkUrl} />
+        ))}
       </div>
 
       {/* Best Gear Section */}

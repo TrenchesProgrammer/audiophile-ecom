@@ -61,9 +61,13 @@ export default function Home() {
 
       {/* CATEGORY CARDS */}
       <div className="padding-container py-12 md:py-20 mt-10 gap-16 md:gap-8 flex flex-col lg:flex-row w-full lg:justify-between">
-        <HeroCard />
-        <HeroCard />
-        <HeroCard />
+        {[
+          { imageUrl: "/shared/desktop/image-category-thumbnail-headphones.png", title: "HEADPHONES", linkUrl: "/headphones" },
+          { imageUrl: "/shared/desktop/image-category-thumbnail-speakers.png", title: "SPEAKERS", linkUrl: "/speakers" },
+          { imageUrl: "/shared/desktop/image-category-thumbnail-earphones.png", title: "EARPHONES", linkUrl: "/earphones" },
+        ].map((category, index) => (
+          <HeroCard key={index} imageUrl={category.imageUrl} title={category.title} linkUrl={category.linkUrl} />
+        ))}
       </div>
 
       {/* ZX9 SPEAKER SECTION */}
@@ -86,7 +90,7 @@ export default function Home() {
                 Upgrade to premium speakers that are phenomenally built to
                 deliver truly remarkable sound.
               </p>
-              <Link href="/zx9-speaker">
+              <Link href="/speakers/zx9">
                 <button className="bg-black text-white px-6 py-3 md:px-8 md:py-3 w-fit cursor-pointer hover:bg-gray-800 font-bold tracking-wider text-sm md:text-base">
                     SEE PRODUCT
                 </button>
@@ -98,7 +102,7 @@ export default function Home() {
         {/* ZX7 SPEAKER SECTION */}
         <div className="mt-6 md:mt-10 bg-zx7 w-full p-6 md:p-20 h-64 md:h-80 flex flex-col justify-center rounded-lg bg-cover bg-center">
           <h3 className="text-2xl md:text-[28px] font-bold mb-4">ZX7 SPEAKER</h3>
-          <Link href="/zx7-speaker">
+          <Link href="/speakers/zx7">
             <button className="border border-black cursor-pointer hover:bg-black hover:text-white px-6 py-3 w-fit font-bold tracking-wide text-sm md:text-base">
                 SEE PRODUCT
             </button>
@@ -110,7 +114,7 @@ export default function Home() {
           <div className="bg-yx1 rounded-lg w-full md:w-[50%] h-52 md:h-80 bg-cover bg-center"></div>
           <div className="bg-gray-100 w-full md:w-[50%] h-52 md:h-80 rounded-lg flex flex-col justify-center p-6 md:p-20">
             <h3 className="text-2xl md:text-[28px] font-bold mb-4">YX1 EARPHONES</h3>
-            <Link href="/yx1-earphones">
+            <Link href="/earphones/yx1">
                 <button className="border border-black cursor-pointer hover:bg-black hover:text-white px-6 py-3 w-fit font-bold tracking-wide text-sm md:text-base">
                 SEE PRODUCT
                 </button>
