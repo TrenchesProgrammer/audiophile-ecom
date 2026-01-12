@@ -1,19 +1,11 @@
 'use client'
-import { useQuery } from 'convex/react'
-import { api } from '../../convex/_generated/api'
 import { useMemo } from 'react'
 import { useRouter } from 'next/navigation'
-import { useDeviceStore } from '../store/cartStore'
+import { useCartStore } from '../store/cartStore'
 
 const CheckoutPage = () => {
-    const { deviceId } = useDeviceStore()
-    const cartItems = useQuery(api.cart.getCartItems, { deviceId })
+    const { cartItems, total } = useCartStore()
     const router = useRouter()
-
-    const total = useMemo(() => {
-        if (!cartItems) return 0
-        return cartItems.reduce((acc, item) => acc + ((item.product?.price ?? 0) * item.quantity), 0)
-    }, [cartItems])
 
     return (
         <div className="container mx-auto p-5">
@@ -27,7 +19,7 @@ const CheckoutPage = () => {
                     <h2 className="text-xl font-bold mb-5">Order Summary</h2>
                     <div className="flex flex-col gap-5">
                         {cartItems?.map((item) => (
-                            <div key={item._id} className="flex justify-between">
+                            <div key={item.product._id} className="flex justify-between">
                                 <p>{item.product?.name} x{item.quantity}</p>
                                 <p>${(item.product?.price ?? 0) * item.quantity}</p>
                             </div>

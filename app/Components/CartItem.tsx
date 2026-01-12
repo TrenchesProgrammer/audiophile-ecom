@@ -1,45 +1,29 @@
 'use client'
 import Image from "next/image";
-import { Id } from "../../convex/_generated/dataModel";
-import { useMutation } from "convex/react";
-import { api } from "../../convex/_generated/api";
+import { useCartStore, CartItem as CartItemType } from '../store/cartStore';
 
 interface CartItemProps {
-  item: {
-    _id: Id<"cart">;
-    quantity: number;
-    product: {
-      name: string;
-      price: number;
-      // FIX: Update this from 'string' to the object structure
-      image: {
-        mobile: string;
-        tablet: string;
-        desktop: string;
-      };
-    };
-  };
+  item: CartItemType;
 }
 
 const CartItem = ({ item }: CartItemProps) => {
-  const updateQuantity = useMutation(api.cart.updateQuantity);
-  const removeFromCart = useMutation(api.cart.removeFromCart);
+  const { updateQuantity, removeFromCart } = useCartStore();
 
   const handleDecrement = () => {
-    if (item.quantity > 1) {
-      updateQuantity({ cartId: item._id, quantity: item.quantity - 1 });
-    } else {
-      removeFromCart({ cartId: item._id });
-    }
+    updateQuantity(item.product._id, item.quantity - 1);
   };
 
   const handleIncrement = () => {
-    updateQuantity({ cartId: item._id, quantity: item.quantity + 1 });
+    updateQuantity(item.product._id, item.quantity + 1);
   };
+  
+  const handleRemove = () => {
+    removeFromCart(item.product._id)
+  }
 
   return (
     <div className="flex justify-between items-center">
-      <Image width={50} height={50} src={`/${item.product.image}`} alt={item.product.name} />
+      <Image width={50} height={50} src={`${item.product.image}`} alt={item.product.name} />
       <div className="flex flex-col gap-1">
         <p className="font-bold">{item.product.name}</p>
         <p className="text-black/50">$ {item.product.price}</p>
@@ -49,6 +33,7 @@ const CartItem = ({ item }: CartItemProps) => {
         <p className="px-3 py-1">{item.quantity}</p>
         <button className="px-3 py-1 text-lg font-bold hover:bg-gray-300" onClick={handleIncrement}>+</button>
       </div>
+       <button className="text-red-500 hover:underline" onClick={handleRemove}>Remove</button>
     </div>
   );
 };

@@ -1,36 +1,27 @@
 'use client'
 
 import Image from "next/image";
-import Link from "next/link"; // Added Link
-import { useQuery, useMutation } from "convex/react";
+import Link from "next/link";
+import { useQuery } from "convex/react";
 import { api } from "../convex/_generated/api";
 import HeroCard from "./Components/HeroCard";
-import { useDeviceStore } from "./store/cartStore";
-import { useEffect } from "react"; // Added useEffect
+import { useCartStore } from "./store/cartStore";
 
 export default function Home() {
   const products = useQuery(api.getProducts.getProducts);
-  const addToCart = useMutation(api.cart.addToCart);
-  
-  // 1. Get deviceId AND setDeviceId
-  const { deviceId, setDeviceId } = useDeviceStore();
-
-  // 2. Generate unique ID on mount (Crucial for first-time visitors)
-  useEffect(() => {
-    setDeviceId();
-  }, [setDeviceId]);
+  const { addToCart } = useCartStore();
 
   const handleAddToCart = () => {
     const product = products?.find(p => p.name === 'XX99 Mark II Headphones');
     
-    // 3. Ensure product and deviceId exist before adding
-    if (product && deviceId) {
-      console.log('Adding to cart:', { productId: product._id, quantity: 1 });
-      addToCart({ productId: product._id, quantity: 1, deviceId });
-    } else {
-        // Fallback
-        setDeviceId();
-        console.warn("Device ID missing, generating now...");
+    if (product) {
+      const productToAdd = {
+        _id: product._id,
+        name: product.name,
+        price: product.price,
+        image: product.image.desktop, // or any other appropriate image
+      };
+      addToCart(productToAdd, 1);
     }
   };
 

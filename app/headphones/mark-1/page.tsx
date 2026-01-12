@@ -2,36 +2,28 @@
 import HeroCard from "@/app/Components/HeroCard";
 import Image from "next/image";
 import Link from "next/link";
-import { useMutation, useQuery } from "convex/react";
+import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-import { useState, useEffect } from "react"; // 1. Import useEffect
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useDeviceStore } from "../../store/cartStore";
+import { useCartStore } from "../../store/cartStore";
 
 const page = () => {
   const router = useRouter();
   const products = useQuery(api.getProducts.getProducts);
-  const addToCart = useMutation(api.cart.addToCart);
-  
-  // 2. Get the setter and the ID
-  const { deviceId, setDeviceId } = useDeviceStore();
+  const { addToCart } = useCartStore();
   const [quantity, setQuantity] = useState(1);
-
-  // 3. Generate ID on mount (Fixes the shared cart issue)
-  useEffect(() => {
-    setDeviceId();
-  }, [setDeviceId]);
 
   const handleAddToCart = () => {
     const product = products?.find((p) => p.name === "XX99 Mark I Headphones");
-    // 4. Ensure we have both product and deviceId before adding
-    if (product && deviceId) {
-      console.log("Adding to cart:", { productId: product._id, quantity, deviceId });
-      addToCart({ productId: product._id, quantity, deviceId });
-    } else {
-      // Optional: Force generation if missing (fallback)
-      setDeviceId();
-      console.warn("Device ID missing, trying to generate...");
+    if (product) {
+      const productToAdd = {
+        _id: product._id,
+        name: product.name,
+        price: product.price,
+        image: product.image.desktop, // or any other appropriate image
+      };
+      addToCart(productToAdd, quantity);
     }
   };
 
