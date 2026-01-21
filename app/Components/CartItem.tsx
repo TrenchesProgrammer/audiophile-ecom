@@ -23,7 +23,7 @@ const CartItem = ({ item }: CartItemProps) => {
 
   return (
     <div className="flex justify-between items-center">
-      <Image width={50} height={50} src={`${item.product.image}`} alt={item.product.name} />
+      <Image width={50} height={50} src={`/${item.product.image}`} alt={item.product.name} />
       <div className="flex flex-col gap-1">
         <p className="font-bold">{item.product.name}</p>
         <p className="text-black/50">$ {item.product.price}</p>
@@ -33,7 +33,7 @@ const CartItem = ({ item }: CartItemProps) => {
         <p className="px-3 py-1">{item.quantity}</p>
         <button className="px-3 py-1 text-lg font-bold hover:bg-gray-300" onClick={handleIncrement}>+</button>
       </div>
-       <button className="text-red-500 hover:underline" onClick={handleRemove}>Remove</button>
+       <button className="text-red-500 hover:underline" onClick={handleRemove}>x</button>
     </div>
   );
 };
