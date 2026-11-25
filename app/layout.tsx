@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
-import { ConvexClientProvider } from "./ConvexClientProvider";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import Cart from "./Components/Cart";
-
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -14,7 +12,7 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
   title: "Audiophile E-commerce",
-  description: "Audiophile E-commerce website built with Next.js and Convex",
+  description: "Audiophile E-commerce website",
 };
 
 export default function RootLayout({
@@ -24,15 +22,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${manrope.className} antialiased`}
-      >
-        <ConvexClientProvider>
-          <Navbar />
-          <Cart />
-          {children}
-          <Footer/>
-        </ConvexClientProvider>
+      <body className={`${manrope.className} antialiased`}>
+        <Navbar />
+        <Cart />
+        {children}
+        <Footer />
       </body>
     </html>
   );

@@ -2,30 +2,41 @@
 import HeroCard from "@/app/Components/HeroCard";
 import Image from "next/image";
 import Link from "next/link";
-import { useQuery } from "convex/react";
-import { api } from "../../../convex/_generated/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCartStore } from "../../store/cartStore";
+import { getProducts, BackendProduct } from "@/lib/api";
+import { findProductByKey, getProductAssets } from "@/lib/productUtils";
 
-const page = () => {
+const Zx7Page = () => {
   const router = useRouter();
-  const products = useQuery(api.getProducts.getProducts);
+  const [products, setProducts] = useState<BackendProduct[]>([]);
   const { addToCart } = useCartStore();
   const [quantity, setQuantity] = useState(1);
 
+  useEffect(() => {
+    let cancelled = false;
+    getProducts()
+      .then((data) => {
+        if (!cancelled) setProducts(data);
+      })
+      .catch((err) => console.error("Failed to load products:", err));
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const product = findProductByKey(products, "zx7");
+  const assets = getProductAssets("zx7");
+
   const handleAddToCart = () => {
-    const product = products?.find((p) => p.name === "ZX7 Speaker");
-    
-    if (product) {
-      const productToAdd = {
-        _id: product._id,
-        name: product.name,
-        price: product.price,
-        image: product.image.desktop, // or any other appropriate image
-      };
-      addToCart(productToAdd, quantity);
-    }
+    const productToAdd = {
+      _id: product?.id || "zx7-fallback",
+      name: assets.name,
+      price: product ? Number(product.price) : 3500,
+      image: assets.cartImage,
+    };
+    addToCart(productToAdd, quantity);
   };
 
   return (
@@ -66,7 +77,9 @@ const page = () => {
             use.
           </p>
           
-          <p className="text-2xl font-bold text-black">$ 3,500</p>
+          <p className="text-2xl font-bold text-black">
+            ₦{product ? Number(product.price).toLocaleString() : "3,500"}
+          </p>
           
           <div className="flex gap-5">
             {/* Interactive Quantity Selector */}
@@ -273,4 +286,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Zx7Page;

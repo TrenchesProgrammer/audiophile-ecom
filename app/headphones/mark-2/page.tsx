@@ -2,30 +2,41 @@
 import HeroCard from "@/app/Components/HeroCard";
 import Image from "next/image";
 import Link from "next/link";
-import { useQuery } from "convex/react";
-import { api } from "../../../convex/_generated/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCartStore } from "../../store/cartStore";
+import { getProducts, BackendProduct } from "@/lib/api";
+import { findProductByKey, getProductAssets } from "@/lib/productUtils";
 
-const page = () => {
+const Mark2Page = () => {
   const router = useRouter();
-  const products = useQuery(api.getProducts.getProducts);
+  const [products, setProducts] = useState<BackendProduct[]>([]);
   const { addToCart } = useCartStore();
   const [quantity, setQuantity] = useState(1);
 
+  useEffect(() => {
+    let cancelled = false;
+    getProducts()
+      .then((data) => {
+        if (!cancelled) setProducts(data);
+      })
+      .catch((err) => console.error("Failed to load products:", err));
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const product = findProductByKey(products, "xx99-mark-two");
+  const assets = getProductAssets("xx99-mark-two");
+
   const handleAddToCart = () => {
-    const product = products?.find((p) => p.name === "XX99 Mark II Headphones");
-    
-    if (product) {
-      const productToAdd = {
-        _id: product._id,
-        name: product.name,
-        price: product.price,
-        image: product.image.desktop, // or any other appropriate image
-      };
-      addToCart(productToAdd, quantity);
-    }
+    const productToAdd = {
+      _id: product?.id || "mark-2-fallback",
+      name: assets.name,
+      price: product ? Number(product.price) : 2999,
+      image: assets.cartImage,
+    };
+    addToCart(productToAdd, quantity);
   };
 
   return (
@@ -67,7 +78,9 @@ const page = () => {
             balanced depth and precision of studio-quality sound.
           </p>
 
-          <p className="text-2xl font-bold text-black">$ 2,999</p>
+          <p className="text-2xl font-bold text-black">
+            ₦{product ? Number(product.price).toLocaleString() : "2,999"}
+          </p>
 
           <div className="flex gap-5">
             {/* Interactive Quantity Selector */}
@@ -277,4 +290,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Mark2Page;

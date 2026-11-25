@@ -2,24 +2,40 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useQuery } from "convex/react";
-import { api } from "../convex/_generated/api";
+import { useEffect, useState } from "react";
 import HeroCard from "./Components/HeroCard";
 import { useCartStore } from "./store/cartStore";
+import { getProducts, BackendProduct } from "@/lib/api";
+import { getProductAssets, findProductByKey } from "@/lib/productUtils";
 
 export default function Home() {
-  const products = useQuery(api.getProducts.getProducts);
+  const [products, setProducts] = useState<BackendProduct[]>([]);
   const { addToCart } = useCartStore();
 
-  const handleAddToCart = () => {
-    const product = products?.find(p => p.name === 'XX99 Mark II Headphones');
-    
-    if (product) {
+  useEffect(() => {
+    let cancelled = false;
+
+    getProducts()
+      .then((data) => {
+        if (!cancelled) setProducts(data);
+      })
+      .catch((error) => console.error("Failed to fetch products:", error));
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const heroProduct = findProductByKey(products, "xx99-mark-two") || products[0];
+  const heroAssets = getProductAssets(heroProduct?.name || "xx99-mark-two");
+
+  const handleAddToCart = () => {    
+    if (heroProduct) {
       const productToAdd = {
-        _id: product._id,
-        name: product.name,
-        price: product.price,
-        image: product.image.desktop, // or any other appropriate image
+        _id: heroProduct.id,
+        name: heroAssets.name,
+        price: Number(heroProduct.price),
+        image: heroAssets.cartImage,
       };
       addToCart(productToAdd, 1);
     }
@@ -33,7 +49,7 @@ export default function Home() {
           <p className="text-white/49 tracking-[4px] md:tracking-[10px] text-sm md:text-base">NEW PRODUCT</p>
           
           <h1 className="text-4xl md:text-6xl font-bold text-white text-center lg:text-left leading-none md:leading-tight">
-            XX99 MARK II <br /> HEADPHONES
+            {heroAssets.name}
           </h1>
           
           <p className="text-white/75 text-center lg:text-left w-full md:w-[400px] text-[15px] leading-relaxed px-4 md:px-0">
@@ -42,7 +58,7 @@ export default function Home() {
           </p>
           
           <button 
-            onClick={handleAddToCart} 
+            onClick={handleAddToCart}
             className="bg-orange-100 hover:bg-orange-200 cursor-pointer text-white px-6 py-3 md:px-8 md:py-4 w-fit font-bold tracking-wider text-sm md:text-base"
           >
             ADD TO CART
