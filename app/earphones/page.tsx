@@ -13,7 +13,7 @@ const page = () => {
       </div>
 
       {/* YX1 Product Block */}
-      <div className="padding-container py-12 md:py-20 mt-6 md:mt-10 flex flex-col lg:flex-row items-center w-full justify-between gap-10 lg:gap-0">
+      <div className="padding-container py-12 md:py-20 mt-6 md:mt-10 flex flex-col lg:flex-row items-center w-full justify-between gap-10">
         <Image
           src="/yx1.svg"
           width={500}

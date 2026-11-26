@@ -13,7 +13,7 @@ const page = () => {
       </div>
 
       {/* ZX9 Product Block */}
-      <div className="padding-container py-12 md:py-20 mt-6 md:mt-10 flex flex-col lg:flex-row items-center w-full justify-between gap-10 lg:gap-0">
+      <div className="padding-container py-12 md:py-20 mt-6 md:mt-10 flex flex-col lg:flex-row items-center w-full justify-between gap-10">
         <Image
           src="/zx9.svg"
           width={500}
@@ -47,7 +47,7 @@ const page = () => {
       </div>
 
       {/* ZX7 Product Block */}
-      <div className="padding-container py-12 md:py-20 mt-6 md:mt-10 flex flex-col-reverse lg:flex-row items-center w-full justify-between gap-10 lg:gap-0">
+      <div className="padding-container py-12 md:py-20 mt-6 md:mt-10 flex flex-col-reverse lg:flex-row items-center w-full justify-between gap-10 ">
         <div className="h-full flex flex-col gap-5 justify-center items-center lg:items-start max-w-[500px] text-white">
           {/* Responsive Tracking */}
           <p className="text-orange-100 tracking-[4px] md:tracking-[10px] text-sm md:text-base">
