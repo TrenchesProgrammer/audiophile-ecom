@@ -33,7 +33,7 @@ const Zx9Page = () => {
     const productToAdd = {
       _id: product?.id || "zx9-fallback",
       name: assets.name,
-      price: product ? Number(product.price) : 4500,
+      price: Number(product?.price),
       image: assets.cartImage,
     };
     addToCart(productToAdd, quantity);
@@ -78,7 +78,7 @@ const Zx9Page = () => {
           </p>
           
           <p className="text-2xl font-bold text-black">
-            ₦{product ? Number(product.price).toLocaleString() : "4,500"}
+            ₦{ Number(product?.price).toLocaleString() }
           </p>
           
           <div className="flex gap-5">

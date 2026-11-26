@@ -33,7 +33,7 @@ const Zx7Page = () => {
     const productToAdd = {
       _id: product?.id || "zx7-fallback",
       name: assets.name,
-      price: product ? Number(product.price) : 3500,
+      price: Number(product?.price),
       image: assets.cartImage,
     };
     addToCart(productToAdd, quantity);
@@ -78,7 +78,7 @@ const Zx7Page = () => {
           </p>
           
           <p className="text-2xl font-bold text-black">
-            ₦{product ? Number(product.price).toLocaleString() : "3,500"}
+            ₦{Number(product?.price).toLocaleString() }
           </p>
           
           <div className="flex gap-5">

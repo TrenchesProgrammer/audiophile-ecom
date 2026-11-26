@@ -33,7 +33,7 @@ const Mark1Page = () => {
     const productToAdd = {
       _id: product?.id || "mark-1-fallback",
       name: assets.name,
-      price: product ? Number(product.price) : 1750,
+      price: Number(product?.price),
       image: assets.cartImage,
     };
     addToCart(productToAdd, quantity);
@@ -76,7 +76,7 @@ const Mark1Page = () => {
           </p>
 
           <p className="text-2xl font-bold text-black">
-            ₦{product ? Number(product.price).toLocaleString() : "1,750"}
+            ₦{Number(product?.price).toLocaleString() }
           </p>
 
           <div className="flex gap-5">
